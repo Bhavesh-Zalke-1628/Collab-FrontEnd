@@ -1,7 +1,27 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { getUserData, logout } from '../redux/slices/authSlices'
 const Navbar = () => {
+  const { isLoggedIn } = useSelector((state) => state?.auth)
+  const { data } = useSelector((state) => state?.auth)
+  const [loading, setLoading] = useState(true)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  async function handleLogout(e) {
+    e.preventDefault();
+    const res = await dispatch(logout());
+    if (res?.payload?.success)
+      navigate("/");
+  }
+  useEffect(() => {
+    // Simulate some loading time
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+    dispatch(getUserData())
+  }, []);
   return (
     <>
       <div className=' bg-slate-200'>
@@ -10,7 +30,7 @@ const Navbar = () => {
             <div className='flex justify-between items-center py-6 px-10 container mx-auto'>
               <div>
                 <h1 className='text-2xl font-bold bg-gradient-to-tr from-indigo-600 to-green-600 bg-clip-text text-transparent hover:cursor-pointer'>
-                  यवतमाळ क्रीडा संकुलन समिति
+                  यवतमाळ क्रीडा संकुलन समिती
                 </h1>
               </div>
 
@@ -65,21 +85,47 @@ const Navbar = () => {
                   </ul>
 
                   <div className='md:flex items-center hidden space-x-4 ml-8 lg:ml-12'>
-                    <h1 className='text-text-gray-600  py-2 hover:cursor-pointer hover:text-indigo-600'>
-                      LOGIN
-                    </h1>
-                    <Link to='/register'>
-                      <h1 className='text-text-gray-600  py-2 hover:cursor-pointer px-4 rounded text-white bg-gradient-to-tr from-indigo-600 to-green-600 hover:shadow-lg'>
-                        Register
-                      </h1>
-                    </Link>
+                    {
+                      !isLoggedIn && <>
+                        <Link to='/login'>
+                          <h1 className='text-text-gray-600  py-2 hover:cursor-pointer hover:text-indigo-600'>
+                            LOGIN
+                          </h1>
+                        </Link>
+                        <Link to='/register'>
+                          <h1 className='text-text-gray-600  py-2 hover:cursor-pointer px-4 rounded text-white bg-gradient-to-tr from-indigo-600 to-green-600 hover:shadow-lg'>
+                            Register
+                          </h1>
+                        </Link>
+                      </>
+                    }
+
+                    {
+                      isLoggedIn &&
+                      <>
+
+                        <h1
+                          onClick={handleLogout}
+                          className='text-text-gray-600  py-2 hover:cursor-pointer hover:text-indigo-600'>
+                          logout
+                        </h1>
+
+                        <Link to='/admin/profile'>
+                          <div className=' bg-yellow-500 '>
+                            {/* <h1>{data.name.charAt[0]}</h1> */}
+                          </div>
+                        </Link>
+                      </>
+
+                    }
+
                   </div>
                 </div>
               </div>
             </div>
           </nav>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   )
 }

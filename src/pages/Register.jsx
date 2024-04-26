@@ -73,7 +73,7 @@ const Register = () => {
 
     localStorage.setItem('data', true)
     if (response?.payload?.success) {
-      navigate('/admin/login')
+      navigate('/login')
     }
 
     setregisteData({
