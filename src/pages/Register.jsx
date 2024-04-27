@@ -34,26 +34,24 @@ const Register = () => {
     e.preventDefault()
     console.log('hello')
 
-
-
     console.log('dat')
     // checking name field length
-    // if (registeData.username.length < 5) {
-    //   toast.error('Name should be atleast of 5 characters')
-    //   return
-    // }
+    if (registeData.username.length < 5) {
+      toast.error('Name should be atleast of 5 characters')
+      return
+    }
 
-    // if (!isEmail(registeData.email)) {
-    //   toast.error('Invalid email id')
-    //   return
-    // }
+    if (!isEmail(registeData.email)) {
+      toast.error('Invalid email id')
+      return
+    }
 
-    // if (!isPassword(registeData.password)) {
-    //   toast.error(
-    //     'Password should be 6 - 16 character long with atleast a number and special character'
-    //   )
-    //   return
-    // }
+    if (!isPassword(registeData.password)) {
+      toast.error(
+        'Password should be 6 - 16 character long with atleast a number and special character'
+      )
+      return
+    }
 
 
     console.log("All data available", registeData)
@@ -67,9 +65,6 @@ const Register = () => {
     // console.log('fromData from Signup', formData)
 
     const response = await dispatch(createAccount(formData))
-    console.log('one', response)
-
-    console.log('two', response.payload)
 
     localStorage.setItem('data', true)
     if (response?.payload?.success) {
@@ -82,6 +77,7 @@ const Register = () => {
       password: '',
       Mo_number: ''
     })
+
   }
 
   return (
