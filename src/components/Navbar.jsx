@@ -110,9 +110,9 @@ const Navbar = () => {
                           logout
                         </h1>
 
-                        <Link to='/admin/profile'>
-                          <div className=' bg-yellow-500 '>
-                            {/* <h1>{data.name.charAt[0]}</h1> */}
+                        <Link to='/user/profile'>
+                          <div className=' bg-yellow-500 px-2 py-2 rounded-full'>
+                            <h1>{data?.username}</h1>
                           </div>
                         </Link>
                       </>

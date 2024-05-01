@@ -21,6 +21,7 @@ import store from './redux/Store.js'
 import Swimming from './pages/Swimming.jsx'
 import Step from './pages/Step.jsx'
 import UserProfile from './pages/UserProfile.jsx'
+import InfoStep1 from './components/stepper/InfoStep1.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,8 +30,9 @@ const router = createBrowserRouter(
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
       <Route path='/services' element={<Swimming />}></Route>
-      <Route path='/process' element={<Step />} />
+      {/* <Route path='/process' element={<Step />} /> */}
       <Route path='/user/profile' element={<UserProfile />}></Route>
+      <Route path='/process' element={<InfoStep1 />}></Route>
     </Route>
   )
 )
