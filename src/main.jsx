@@ -28,10 +28,9 @@ const router = createBrowserRouter(
       <Route path='/' element={<Home />} />
       <Route path='/register' element={<Register />} />
       <Route path='/login' element={<Login />} />
-      <Route path='/service' element={<Swimming />}></Route>
-      {/* <Route path='/process' element={<ProcessStepper />} /> */}
+      <Route path='/services' element={<Swimming />}></Route>
       <Route path='/process' element={<Step />} />
-      <Route path='/admin/profile' element={<UserProfile />}></Route>
+      <Route path='/user/profile' element={<UserProfile />}></Route>
     </Route>
   )
 )

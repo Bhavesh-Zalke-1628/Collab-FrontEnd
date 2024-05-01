@@ -5,7 +5,6 @@ import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { makeStyles } from '@mui/material/styles'
 import { TextField } from '@mui/material'
 import InfoStep1 from '../components/stepper/InfoStep1'
 
@@ -58,44 +57,12 @@ function getStepContent(step) {
                     />
                 </>
             )
-        // case 2:
-        //   return (
-        //     <>
-        //       <TextField
-        //         id='address1'
-        //         label='Address 1'
-        //         variant='outlined'
-        //         placeholder='Enter Your Address 1'
-        //         fullWidth
-        //         margin='normal'
-        //         name='address1'
-        //       />
-        //       <TextField
-        //         id='address2'
-        //         label='Address 2'
-        //         variant='outlined'
-        //         placeholder='Enter Your Address 2'
-        //         fullWidth
-        //         margin='normal'
-        //         name='address2'
-        //       />
-        //       <TextField
-        //         id='country'
-        //         label='Country'
-        //         variant='outlined'
-        //         placeholder='Enter Your Country Name'
-        //         fullWidth
-        //         margin='normal'
-        //         name='country'
-        //       />
-        //     </>
-        //   )
         case 2:
             return (
                 <>
                     <TextField
                         id='cardNumber'
-                        label='Card Number'
+                        label='Ca   rd Number'
                         variant='outlined'
                         placeholder='Enter Your Card Number'
                         fullWidth
