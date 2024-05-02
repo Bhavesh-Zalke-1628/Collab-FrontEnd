@@ -16,10 +16,28 @@ import InfoStep1 from '../components/stepper/InfoStep1'
 //   }
 // }))
 
+// const [data, setData] = useState({
+//     name: "",
+//     email: '',
+//     contact: Number,
+//     address: ""
+// })
 function getSteps() {
     return ['Basic information', 'Personal Document', 'Payment']
 }
 
+async function handleSubmit(e) {
+    e.preventDefault()
+
+    const formData = new FormData()
+
+    formData.append('name', data.name)
+    formData.append('email', data.email)
+    formData.append('contact', data.contact)
+    formData.append('address', data.address)
+
+
+}
 function getStepContent(step) {
     switch (step) {
         case 0:
@@ -173,6 +191,14 @@ const LinaerStepper = () => {
                         color='primary'
                         onClick={handleNext}
                     >
+                        {activeStep == 0 ? (
+                            <>
+                                {onclick = { handleSubmit }}
+                                {'finish'}
+
+                            </>) : (<>
+                                {console.log('hello')}
+                            </>)}
                         {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                 </>

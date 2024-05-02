@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import axiosInstance from "../../Helper/axiosInstance";
 const initialState = {
     isLoggedIn: localStorage.getItem('isLoggedIn') || false,
-    data: JSON.parse(localStorage.getItem('data')) || {}
+    data: (localStorage.getItem('data')) || {}
 }
 
 
@@ -26,7 +26,7 @@ export const createAccount = createAsyncThunk("/register", async (data) => {
     }
 })
 
-export const loginAdmin = createAsyncThunk("/login", async (data) => {
+export const loginAdmin = createAsyncThunk("/auth/login", async (data) => {
     console.log(data.email)
     try {
         console.log(data)

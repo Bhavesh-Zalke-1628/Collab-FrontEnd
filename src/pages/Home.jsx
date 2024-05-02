@@ -40,7 +40,7 @@ const Home = () => {
                   />
                 </div>
                 <a
-                  href='#'
+                  href='/services'
                   className='uppercase inline-block mt-8 text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
                 >
                   get start

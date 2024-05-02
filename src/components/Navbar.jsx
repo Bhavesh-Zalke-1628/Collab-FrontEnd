@@ -67,12 +67,12 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link
+                      {/* <Link
                         to='/product'
                         className='text-gray-700 hover:text-indigo-600 text-md '
                       >
                         Products
-                      </Link>
+                      </Link> */}
                     </li>
                     <li>
                       <Link
