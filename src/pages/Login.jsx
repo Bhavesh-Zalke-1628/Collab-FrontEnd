@@ -24,6 +24,7 @@ const Register = () => {
             [name]: value
         })
     }
+
     async function onLogin(event) {
         event.preventDefault();
         if (!loginData.email || !loginData.password) {
@@ -35,7 +36,7 @@ const Register = () => {
         const response = await dispatch(loginUser(loginData));
         console.log(response)
         if (response?.payload?.success)
-            navigate('/user/profile');
+            navigate('/');
 
         setLoginData({
             email: "",

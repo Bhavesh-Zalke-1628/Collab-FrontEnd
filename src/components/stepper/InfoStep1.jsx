@@ -4,41 +4,68 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import { BsPersonCircle } from 'react-icons/bs'
+// import Button from '@mui/material/Button'
+import Button from '@mui/material/Button'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { userRegistration } from '../../redux/slices/UserRegistrationSlice'
+import { FourMpRounded } from '@mui/icons-material'
+
 
 const InfoStep1 = () => {
+
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
     const [previewImage, setPreviewImage] = useState("");
 
-    const [userData, setUserData] = useState({
-        userName: "",
-        email: "",
-        contact: "",
-        alternatePhone: "",
+
+
+    const [data, setData] = useState({
+        name: "",
+        email: '',
+        contact: 123,
         address: "",
-        gender: "",
+        gender: '',
+        batch: '',
+        alternatePhone: 123
     })
-
-
-    const [data, setData] = useState()
-
-
     async function onInputChange(e) {
         const { name, value } = e.target
-        setUserData({
-            ...userData,
+        setData({
+            ...data,
             [name]: value
         })
     }
+    async function handleSubmit(e) {
+        console.log('hello')
+
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        formData.append('name', data.name)
+        formData.append('email', data.email)
+        formData.append('contact', data.contact)
+        formData.append('address', data.address)
+        formData.append('gender', data.gender)
+        formData.append('batch', data.batch)
+        formData.append('alternatePhone', data.alternatePhone)
+
+        const response = await dispatch(userRegistration(formData))
+        console.log(response.payload)
+    }
 
 
-    console.log(userData)
+
     function getImage(event) {
         event.preventDefault();
         // getting the image
         const uploadedImage = event.target.files[0];
 
         if (uploadedImage) {
-            setUserData({
-                ...userData,
+            setData({
+                ...data,
                 avatar: uploadedImage
             });
             const fileReader = new FileReader();
@@ -104,6 +131,7 @@ const InfoStep1 = () => {
                 margin='normal'
                 name='name'
                 onChange={onInputChange}
+                value={data.name}
             />
             <TextField
                 id='email'
@@ -114,7 +142,7 @@ const InfoStep1 = () => {
                 margin='normal'
                 name='email'
                 onChange={onInputChange}
-
+                value={data.email}
             />
             <TextField
                 id='phone-number'
@@ -125,7 +153,7 @@ const InfoStep1 = () => {
                 margin='normal'
                 name='contact'
                 onChange={onInputChange}
-
+                value={data.contact}
             />
             <TextField
                 id='alternate-phone'
@@ -136,6 +164,7 @@ const InfoStep1 = () => {
                 margin='normal'
                 onChange={onInputChange}
                 name='alternatePhone'
+                value={data.alternatePhone}
             />
             <TextField
                 id='address'
@@ -146,6 +175,7 @@ const InfoStep1 = () => {
                 margin='normal'
                 onChange={onInputChange}
                 name='address'
+                value={data.address}
             />
             <div className='mx-20 flex items-center  justify-evenly  mb-20'>
                 <div>
@@ -153,13 +183,15 @@ const InfoStep1 = () => {
                     <Select
                         labelId='demo-select-small-label'
                         id='demo-select-small'
-                        label='Age'
+                        onChange={onInputChange}
+                        value={data.gender}
+                        name='gender'
                     >
                         <MenuItem value=''>
                             <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>manus</MenuItem>
-                        <MenuItem value={20}>bai</MenuItem>
+                        <MenuItem value={10}>Male</MenuItem>
+                        <MenuItem value={20}>Female</MenuItem>
                         <MenuItem value={30}>Other</MenuItem>
                     </Select>
                 </div>
@@ -168,9 +200,10 @@ const InfoStep1 = () => {
                     <Select
                         labelId='demo-select-small-label'
                         id='demo-select-small'
-                        // value={batch}
+                        value={data.batch}
                         label='Age'
-                    // onChange={handleChange}
+                        name='batch'
+                        onChange={onInputChange}
                     >
                         <MenuItem value=''>
                             <em>None</em>
@@ -180,6 +213,14 @@ const InfoStep1 = () => {
                         <MenuItem value={30}>9-10</MenuItem>
                     </Select>
                 </div>
+                <Button
+                    variant='contained'
+                    color='secondary'
+                    className=' mr-5'
+                    onClick={handleSubmit}
+                >
+                    save and contiue
+                </Button>
             </div>
         </>
     )

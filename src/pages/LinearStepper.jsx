@@ -7,6 +7,9 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { TextField } from '@mui/material'
 import InfoStep1 from '../components/stepper/InfoStep1'
+import { batch, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { userRegistration } from '../redux/slices/UserRegistrationSlice'
 
 // import { TextField, makeStyles } from '@mui/material'
 
@@ -26,18 +29,7 @@ function getSteps() {
     return ['Basic information', 'Personal Document', 'Payment']
 }
 
-async function handleSubmit(e) {
-    e.preventDefault()
 
-    const formData = new FormData()
-
-    formData.append('name', data.name)
-    formData.append('email', data.email)
-    formData.append('contact', data.contact)
-    formData.append('address', data.address)
-
-
-}
 function getStepContent(step) {
     switch (step) {
         case 0:
@@ -73,6 +65,13 @@ function getStepContent(step) {
                         margin='normal'
                         name='alternatePhone'
                     />
+                    <Button
+                        variant='contained'
+                        color='secondary'
+                        className=' mr-5 mt-10 '
+                    >
+                        save and continue
+                    </Button>
                 </>
             )
         case 2:
@@ -135,12 +134,14 @@ const LinaerStepper = () => {
         setActiveStep(activeStep - 1)
     }
 
+
     // const handleSkip = () => {
     //   if (!isStepSkipped(activeStep)) {
     //     setSkippedSteps([...skippedSteps, activeStep])
     //   }
     //   setActiveStep(activeStep + 1)
     // }
+
 
     return (
         <div>
@@ -191,14 +192,6 @@ const LinaerStepper = () => {
                         color='primary'
                         onClick={handleNext}
                     >
-                        {activeStep == 0 ? (
-                            <>
-                                {onclick = { handleSubmit }}
-                                {'finish'}
-
-                            </>) : (<>
-                                {console.log('hello')}
-                            </>)}
                         {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                 </>

@@ -22,6 +22,7 @@ import Swimming from './pages/Swimming.jsx'
 import Step from './pages/Step.jsx'
 import UserProfile from './pages/UserProfile.jsx'
 import InfoStep1 from './components/stepper/InfoStep1.jsx'
+import { Toaster } from 'react-hot-toast'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -43,6 +44,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
       <RouterProvider router={router} />
       <App />
+      <Toaster />
     </Provider >
   </React.StrictMode>
 )
