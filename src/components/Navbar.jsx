@@ -4,7 +4,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getUserData, logout } from '../redux/slices/authSlices'
 const Navbar = () => {
   const { isLoggedIn } = useSelector((state) => state?.auth)
+  // console.log(isLoggedIn)
   const { data } = useSelector((state) => state?.auth)
+  // console.log(data)
   const [loading, setLoading] = useState(true)
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -59,12 +61,26 @@ const Navbar = () => {
                       </Link>
                     </li>
                     <li>
-                      <Link
-                        to='/services'
-                        className='text-gray-700 hover:text-indigo-600 text-md '
-                      >
-                        Services
-                      </Link>
+                      {
+                        isLoggedIn && data?.role == 'Admin' ?
+                          <>
+                            <Link
+                              to='/application'
+                              className='text-gray-700 hover:text-indigo-600 text-md '
+                            >
+                              application's
+                            </Link>
+                          </>
+                          :
+                          <>
+                            <Link
+                              to='/services'
+                              className='text-gray-700 hover:text-indigo-600 text-md '
+                            >
+                              Services
+                            </Link>
+                          </>
+                      }
                     </li>
                     <li>
                       {/* <Link

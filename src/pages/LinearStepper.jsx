@@ -10,6 +10,7 @@ import InfoStep1 from '../components/stepper/InfoStep1'
 import { batch, useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { userRegistration } from '../redux/slices/UserRegistrationSlice'
+import InfoStep2 from '../components/stepper/InfoStep2'
 
 // import { TextField, makeStyles } from '@mui/material'
 
@@ -37,42 +38,44 @@ function getStepContent(step) {
 
         case 1:
             return (
-                <>
-                    <TextField
-                        id='email'
-                        label='E-mail'
-                        variant='outlined'
-                        placeholder='Enter Your E-mail Address'
-                        fullWidth
-                        margin='normal'
-                        name='emailAddress'
-                    />
-                    <TextField
-                        id='phone-number'
-                        label='Phone Number'
-                        variant='outlined'
-                        placeholder='Enter Your Phone Number'
-                        fullWidth
-                        margin='normal'
-                        name='phoneNumber'
-                    />
-                    <TextField
-                        id='alternate-phone'
-                        label='Alternate Phone'
-                        variant='outlined'
-                        placeholder='Enter Your Alternate Phone'
-                        fullWidth
-                        margin='normal'
-                        name='alternatePhone'
-                    />
-                    <Button
-                        variant='contained'
-                        color='secondary'
-                        className=' mr-5 mt-10 '
-                    >
-                        save and continue
-                    </Button>
-                </>
+
+                <InfoStep2 />
+                // <>
+                //     <TextField
+                //         id='email'
+                //         label='E-mail'
+                //         variant='outlined'
+                //         placeholder='Enter Your E-mail Address'
+                //         fullWidth
+                //         margin='normal'
+                //         name='emailAddress'
+                //     />
+                //     <TextField
+                //         id='phone-number'
+                //         label='Phone Number'
+                //         variant='outlined'
+                //         placeholder='Enter Your Phone Number'
+                //         fullWidth
+                //         margin='normal'
+                //         name='phoneNumber'
+                //     />
+                //     <TextField
+                //         id='alternate-phone'
+                //         label='Alternate Phone'
+                //         variant='outlined'
+                //         placeholder='Enter Your Alternate Phone'
+                //         fullWidth
+                //         margin='normal'
+                //         name='alternatePhone'
+                //     />
+                //     <Button
+                //         variant='contained'
+                //         color='secondary'
+                //         className=' mr-5 mt-10 '
+                //     >
+                //         save and continue
+                //     </Button>
+                // </>
             )
         case 2:
             return (

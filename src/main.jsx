@@ -23,6 +23,7 @@ import Step from './pages/Step.jsx'
 import UserProfile from './pages/UserProfile.jsx'
 import InfoStep1 from './components/stepper/InfoStep1.jsx'
 import { Toaster } from 'react-hot-toast'
+import Application from './pages/Application.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,6 +35,7 @@ const router = createBrowserRouter(
       <Route path='/process' element={<Step />} />
       <Route path='/user/profile' element={<UserProfile />}></Route>
       {/* <Route path='/process' element={<InfoStep1 />}></Route> */}
+      <Route path='/application' element={<Application />}></Route>
     </Route>
   )
 )

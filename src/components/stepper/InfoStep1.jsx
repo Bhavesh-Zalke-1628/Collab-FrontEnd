@@ -6,7 +6,7 @@ import Select from '@mui/material/Select'
 import { BsPersonCircle } from 'react-icons/bs'
 // import Button from '@mui/material/Button'
 import Button from '@mui/material/Button'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { userRegistration } from '../../redux/slices/UserRegistrationSlice'
 import { FourMpRounded } from '@mui/icons-material'
@@ -19,16 +19,22 @@ const InfoStep1 = () => {
 
     const [previewImage, setPreviewImage] = useState("");
 
+    const user = useSelector((state) => state?.auth?.data)
 
+    console.log('user', user)
 
     const [data, setData] = useState({
         name: "",
         email: '',
-        contact: 123,
+        contact: Number,
         address: "",
         gender: '',
         batch: '',
-        alternatePhone: 123
+        alternatePhone: Number,
+        profile: {
+            public_url: 'Demo',
+            secure_url: 'Demo'
+        }
     })
     async function onInputChange(e) {
         const { name, value } = e.target
@@ -51,9 +57,10 @@ const InfoStep1 = () => {
         formData.append('gender', data.gender)
         formData.append('batch', data.batch)
         formData.append('alternatePhone', data.alternatePhone)
+        formData.append('profile', data.profile)
 
         const response = await dispatch(userRegistration(formData))
-        console.log(response.payload)
+        console.log(response)
     }
 
 
@@ -66,7 +73,7 @@ const InfoStep1 = () => {
         if (uploadedImage) {
             setData({
                 ...data,
-                avatar: uploadedImage
+                profile: uploadedImage
             });
             const fileReader = new FileReader();
             fileReader.readAsDataURL(uploadedImage);
@@ -109,7 +116,11 @@ const InfoStep1 = () => {
                         {previewImage ? (
                             <img className="w-24 h-24 rounded-full m-auto" src={previewImage} />
                         ) : (
-                            <BsPersonCircle className='w-20 h-20 rounded-full m-auto text-white' />
+                            <>
+                                {/* <div className=' bg-yellow-500'> */}
+                                <BsPersonCircle className='w-20 h-20 rounded-full m-auto text-black' />
+                                {/* </div> */}
+                            </>
                         )}
                     </label>
                     <input
@@ -118,6 +129,7 @@ const InfoStep1 = () => {
                         type="file"
                         name="image_uploads"
                         id="image_uploads"
+                        accept=".jpg, .jpeg, .png, .svg"
                     />
                 </div>
             </div>
@@ -141,19 +153,18 @@ const InfoStep1 = () => {
                 fullWidth
                 margin='normal'
                 name='email'
-                onChange={onInputChange}
-                value={data.email}
+                value={user.email}
+                className=' read-only:'
             />
             <TextField
                 id='phone-number'
                 label='Phone Number'
                 variant='outlined'
-                placeholder='Enter Your Phone Number'
                 fullWidth
                 margin='normal'
                 name='contact'
-                onChange={onInputChange}
-                value={data.contact}
+                value={user.Mo_number}
+                className=' read-only:'
             />
             <TextField
                 id='alternate-phone'

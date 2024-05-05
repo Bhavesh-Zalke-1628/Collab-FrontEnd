@@ -6,7 +6,7 @@ const store = configureStore({
     reducer: {
         auth: authSlice,
         swimUser: swimUserSlice,
-        userRegister: UserRegistrationSlice
+        registerUser: UserRegistrationSlice
     },
     devTools: true
 });

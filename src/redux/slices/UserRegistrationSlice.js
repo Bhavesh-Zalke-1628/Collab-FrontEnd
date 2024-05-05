@@ -4,37 +4,48 @@ import axiosInstance from "../../Helper/axiosInstance"
 import toast from "react-hot-toast"
 
 const initialState = {
-    userData: localStorage.getItem('userData')
+    registerUserData: localStorage.getItem('userData')
 }
 
 
 export const userRegistration = createAsyncThunk('/process', async (data) => {
-
-    const config = {
-        headers: {
-            'content-Type': 'application/json'
-        }
-    }
-    const response = axiosInstance.post('/user/swim/register', data, config)
+    const response = axiosInstance.post('/user/swim/register', data)
     console.log(response.data)
     toast.promise(response, {
-        loading: "Crating new Cource",
-        success: "Cource Created Successfully",
+        loading: "Completing step 1",
+        success: "Step one completed successfully",
         error: "Failed to create Cource"
     })
     console.log(response)
     return (await response).data
+})
 
+
+
+export const getUserRegistration = createAsyncThunk('/application', async (data) => {
+    const response = axiosInstance.get('/user/user-info', data)
+    console.log(response.data)
+    toast.promise(response, {
+        loading: "Wait load the user application's  ",
+        success: "Register data load successfully",
+        error: "Failed to data"
+    })
+    console.log(response)
+    return (await response).data
 })
 
 const userRegistrationSlice = createSlice({
     name: "userRegistrationSlice",
-    initialState: {},
+    initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
             .addCase(userRegistration.fulfilled, async (state, action) => {
-                state.userData = action.payload.data
+                state.registerUserData = action.payload.data
+            })
+            .addCase(getUserRegistration.fulfilled, (state, action) => {
+                console.log(action.payload)
+                state.registerUserData = action.payload.user
             })
     }
 })

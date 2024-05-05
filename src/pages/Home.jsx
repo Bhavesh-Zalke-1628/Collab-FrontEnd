@@ -1,8 +1,11 @@
 import React from 'react'
 import Typewriter from 'typewriter-effect'
 import HomeCrousal from './HomeCrousal'
+import { useSelector } from 'react-redux'
 
 const Home = () => {
+  const { data } = useSelector((state) => state?.auth)
+
   return (
     <>
       <main>
@@ -39,12 +42,15 @@ const Home = () => {
                     }}
                   />
                 </div>
-                <a
-                  href='/services'
-                  className='uppercase inline-block mt-8 text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
-                >
-                  get start
-                </a>
+                {
+                  data.role == 'User' &&
+                  <a
+                    href='/services'
+                    className='uppercase inline-block mt-8 text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
+                  >
+                    get start
+                  </a>
+                }
               </div>
             </div>
             <div className='col-span-1   '>
@@ -95,7 +101,7 @@ const Home = () => {
             <HomeCrousal />
           </div>
         </section>
-      </main>
+      </main >
     </>
   )
 }
