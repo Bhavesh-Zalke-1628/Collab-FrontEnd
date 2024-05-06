@@ -8,6 +8,7 @@ function UserCard({ data }) {
             <div
                 className=' bg-gray-800 text-white font-semibold py-4 px-5 min-w-96 w-fit flex items-center justify-around'
             >
+
                 <div>
 
                     <h1>{data?.name}</h1>
@@ -16,9 +17,9 @@ function UserCard({ data }) {
                 </div>
                 <div className=' flex flex-col gap-1'>
                     <div
-                        className=' bg-purple-800  w-28 h-28 rounded-md'
+                        className=' bg-purple-800  w-28 h-28 rounded-md overflow-hidden'
                     >
-
+                        <img src={data?.profile?.secure_url} alt="" />
                     </div>
                     <Button
                         variant='contained'

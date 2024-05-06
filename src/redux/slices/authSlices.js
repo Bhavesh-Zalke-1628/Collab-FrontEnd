@@ -133,7 +133,6 @@ const authSlice = createSlice({
                 localStorage.setItem("data", JSON.stringify(action?.payload?.user));
                 localStorage.setItem("isLoggedIn", true);
                 state.isLoggedIn = true;
-                console.log(action?.payload?.user)
                 state.data = action?.payload?.user;
             });
     }

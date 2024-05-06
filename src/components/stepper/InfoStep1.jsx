@@ -21,7 +21,6 @@ const InfoStep1 = () => {
 
     const user = useSelector((state) => state?.auth?.data)
 
-    console.log('user', user)
 
     const [data, setData] = useState({
         name: "",
@@ -60,7 +59,7 @@ const InfoStep1 = () => {
         formData.append('profile', data.profile)
 
         const response = await dispatch(userRegistration(formData))
-        console.log(response)
+        console.log(response.data)
     }
 
 
@@ -153,8 +152,8 @@ const InfoStep1 = () => {
                 fullWidth
                 margin='normal'
                 name='email'
-                value={user.email}
-                className=' read-only:'
+                value={data.email}
+                onChange={onInputChange}
             />
             <TextField
                 id='phone-number'
@@ -162,9 +161,10 @@ const InfoStep1 = () => {
                 variant='outlined'
                 fullWidth
                 margin='normal'
+                placeholder='Enter your phone number'
                 name='contact'
-                value={user.Mo_number}
-                className=' read-only:'
+                value={data.contact}
+                onChange={onInputChange}
             />
             <TextField
                 id='alternate-phone'
@@ -195,15 +195,14 @@ const InfoStep1 = () => {
                         labelId='demo-select-small-label'
                         id='demo-select-small'
                         onChange={onInputChange}
-                        value={data.gender}
                         name='gender'
                     >
                         <MenuItem value=''>
                             <em>None</em>
                         </MenuItem>
-                        <MenuItem value={10}>Male</MenuItem>
-                        <MenuItem value={20}>Female</MenuItem>
-                        <MenuItem value={30}>Other</MenuItem>
+                        <MenuItem value='male'>Male</MenuItem>
+                        <MenuItem value='female'>Female</MenuItem>
+                        <MenuItem value='other'>Other</MenuItem>
                     </Select>
                 </div>
                 <div>
