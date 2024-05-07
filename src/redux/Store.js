@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authSlice from './slices/authSlices';
 import UserRegistrationSlice from './slices/UserRegistrationSlice';
+import paymentSlice from './slices/paymentSlice';
+
 const store = configureStore({
     reducer: {
         auth: authSlice,
-        registerUser: UserRegistrationSlice
+        registerUser: UserRegistrationSlice,
+        razorpay: paymentSlice,
     },
     devTools: true
 });

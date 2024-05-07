@@ -28,7 +28,7 @@ import ScheduleStep3 from '../components/stepper/ScheduleStep3'
 //     address: ""
 // })
 function getSteps() {
-    return ['Basic information', 'Personal Document', 'Payment']
+    return ['Basic information', 'Personal Document', 'schedule ', 'Payment']
 }
 
 
