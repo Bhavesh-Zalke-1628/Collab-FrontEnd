@@ -7,10 +7,11 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { TextField } from '@mui/material'
 import InfoStep1 from '../components/stepper/InfoStep1'
-import { batch, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { userRegistration } from '../redux/slices/UserRegistrationSlice'
 import InfoStep2 from '../components/stepper/InfoStep2'
+import ScheduleStep3 from '../components/stepper/ScheduleStep3'
 
 // import { TextField, makeStyles } from '@mui/material'
 
@@ -38,76 +39,15 @@ function getStepContent(step) {
 
         case 1:
             return (
-
                 <InfoStep2 />
-                // <>
-                //     <TextField
-                //         id='email'
-                //         label='E-mail'
-                //         variant='outlined'
-                //         placeholder='Enter Your E-mail Address'
-                //         fullWidth
-                //         margin='normal'
-                //         name='emailAddress'
-                //     />
-                //     <TextField
-                //         id='phone-number'
-                //         label='Phone Number'
-                //         variant='outlined'
-                //         placeholder='Enter Your Phone Number'
-                //         fullWidth
-                //         margin='normal'
-                //         name='phoneNumber'
-                //     />
-                //     <TextField
-                //         id='alternate-phone'
-                //         label='Alternate Phone'
-                //         variant='outlined'
-                //         placeholder='Enter Your Alternate Phone'
-                //         fullWidth
-                //         margin='normal'
-                //         name='alternatePhone'
-                //     />
-                //     <Button
-                //         variant='contained'
-                //         color='secondary'
-                //         className=' mr-5 mt-10 '
-                //     >
-                //         save and continue
-                //     </Button>
-                // </>
             )
         case 2:
             return (
-                <>
-                    <TextField
-                        id='cardNumber'
-                        label='Ca   rd Number'
-                        variant='outlined'
-                        placeholder='Enter Your Card Number'
-                        fullWidth
-                        margin='normal'
-                        name='cardNumber'
-                    />
-                    <TextField
-                        id='cardMonth'
-                        label='Card Month'
-                        variant='outlined'
-                        placeholder='Enter Your Card Month'
-                        fullWidth
-                        margin='normal'
-                        name='cardMonth'
-                    />
-                    <TextField
-                        id='cardYear'
-                        label='Card Year'
-                        variant='outlined'
-                        placeholder='Enter Your Card Year'
-                        fullWidth
-                        margin='normal'
-                        name='cardYear'
-                    />
-                </>
+                <ScheduleStep3 />
+            )
+        case 3:
+            return (
+                <ScheduleStep3 />
             )
         default:
             return 'unknown step'
