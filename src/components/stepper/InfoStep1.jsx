@@ -67,7 +67,6 @@ const InfoStep1 = () => {
         console.log(response.data)
     }
 
-    console.log(data.profile)
 
     function getImage(event) {
         event.preventDefault();

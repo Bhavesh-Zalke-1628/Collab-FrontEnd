@@ -2,7 +2,7 @@ import { FormControlLabel, Radio } from '@mui/material'
 import React from 'react'
 
 function PlanCard({ plan }) {
-    console.log(plan)
+    // console.log(plan)
     return (
         <a
             href='#'
@@ -17,6 +17,9 @@ function PlanCard({ plan }) {
                 control={<Radio />}
                 label={plan.planName}
             />
+            {/* <input
+                type='radio'
+            /> */}
         </a>
     )
 }

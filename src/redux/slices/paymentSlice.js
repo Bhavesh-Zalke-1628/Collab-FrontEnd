@@ -11,9 +11,10 @@ const initialState = {
     status: ""
 }
 
-export const getRazorPayId = createAsyncThunk("/razorpay/getId", async (data) => {
+export const getRazorPayId = createAsyncThunk("/razorpay/getId", async () => {
     try {
-        const response = await axiosInstance.get(`/payment/razorpay-key/getid/${data}`);
+        console.log('getRazorPayId')
+        const response = await axiosInstance.get(`/payment/razorpay-key/getid`);
         return response.data;
     } catch (error) {
         toast.error("Failed to load data");
@@ -22,8 +23,9 @@ export const getRazorPayId = createAsyncThunk("/razorpay/getId", async (data) =>
 
 
 export const purchaseCourseBundle = createAsyncThunk("/purchaseCourse", async (data) => {
+    console.log('purchaseCourseBundle data', data)
     try {
-        const response = await axiosInstance.post(`/payment/razorpay/subscribe/${data}`);
+        const response = axiosInstance.post('/payment/razorpay/subscribe', data);
         console.log(response.data)
         return response.data;
     } catch (error) {
@@ -33,6 +35,7 @@ export const purchaseCourseBundle = createAsyncThunk("/purchaseCourse", async (d
 
 
 export const verifyUserPayment = createAsyncThunk("/payments/verify", async (data) => {
+    console.log(data)
     try {
         const response = await axiosInstance.post(`/payment/razorpay/verify/${data[1]}`, {
             razorpay_payment_id: data.razorpay_payment_id,
@@ -46,28 +49,7 @@ export const verifyUserPayment = createAsyncThunk("/payments/verify", async (dat
 });
 
 
-// export const getPaymentRecord = createAsyncThunk(
-//     '/payments/record',
-//     async () => {
-//         try {
-//             console.log("Get payment record");
-//             const response = await axios.get('http://localhost:5000/api/payment?count=100');
-//             console.log(response);
-//             toast.promise(response, {
-//                 // loading: "Getting the payment records",
-//                 success: (data) => {
-//                     return data?.data?.msg;
-//                 },
-//                 error: "Failed to get payment records"
-//             });
-//             console.log(response.data.payments);
-//             return response.data;
-//         } catch (error) {
-//             console.error("Error occurred while fetching payment records: ", error);
-//             throw error; // Make sure to throw the error to properly handle it in the Redux slice or component
-//         }
-//     }
-// );
+
 
 
 const paymentSlice = createSlice({
@@ -81,8 +63,6 @@ const paymentSlice = createSlice({
             })
             .addCase(purchaseCourseBundle.fulfilled, (state, action) => {
                 console.log('action in  verifyUserPayment full >', action)
-                console.log(action?.payload)
-                toast.success(action?.payload.msg)
                 state.subscription_id = action?.payload?.subscription_id;
             })
             .addCase(verifyUserPayment.rejected, (state, action) => {

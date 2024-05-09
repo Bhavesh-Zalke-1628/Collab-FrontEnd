@@ -1,4 +1,5 @@
 import {
+    Button,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -9,28 +10,86 @@ import Radio from '@mui/material/Radio'
 import axios from 'axios'
 import { useEffect } from 'react'
 import PlanCard from '../Constant/PlanCard'
+import { useDispatch, useSelector } from 'react-redux'
+import toast from 'react-hot-toast'
+import { getRazorPayId, purchaseCourseBundle, verifyUserPayment } from '../../redux/slices/paymentSlice'
 
 const ScheduleStep3 = () => {
     const [male, setmale] = useState(true)
     const [morning, setmorning] = useState()
     const [data, setData] = useState()
+    console.log('start')
+
+    const dispatch = useDispatch()
     async function getplan() {
         const response = await axios.get('http://localhost:5000/api/plan/getAllPlan')
-
-        console.log(response.data)
         setData(response.data)
     }
-    console.log(data)
+
+    const razorpayKey = useSelector((state) => state?.razorpay?.key);
+    const subscription_id = useSelector((state) => state?.razorpay?.subscription_id);
+
+
+    const payment = useSelector((state) => state.razorpay)
+
+    const dataSet = useSelector((state) => state?.auth?.data)
+
+    const paymentDetails = {
+        razorpay_payment_id: "",
+        razorpay_subscription_id: "",
+        razorpay_signature: ""
+    }
+
+    async function handleSubscription(e) {
+        e.preventDefault();
+        console.log(razorpayKey, subscription_id)
+        if (!razorpayKey || !subscription_id) {
+            toast.error("Something went wrong");
+            return;
+        }
+        console.log('hii')
+
+
+        const options = {
+            key: razorpayKey,
+            subscription_id: subscription_id,
+            name: "e-Shiksha Pvt. Ltd.",
+            description: "Subscription",
+            theme: {
+                color: '#F37254'
+            },
+
+            handler: async function (response) {
+                paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
+                paymentDetails.razorpay_signature = response.razorpay_signature;
+                paymentDetails.razorpay_subscription_id = response.razorpay_subscription_id;
+                toast.success("Payment successfull");
+                const res = await dispatch(verifyUserPayment(paymentDetails));
+                console.log('navigate res', res)
+                // toast.success(res?.payload?.msg);
+                res?.payload?.success ? navigate("/checkout/success") : navigate("/checkout/fail");
+            }
+        }
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+    }
+
+
+    const formData = new FormData()
+    formData.append('userId', dataSet._id)
+    async function load() {
+        await dispatch(getRazorPayId());
+        await dispatch(purchaseCourseBundle(formData));
+    }
 
     useEffect(() => {
+        load();
         getplan()
     }, []);
+
     return (
         <div>
             <div>
-                {
-                    // data.map(e => console.log(e))
-                }
                 <FormControl>
                     <FormLabel id='demo-radio-buttons-group-label'>
                         {' '}
@@ -45,9 +104,10 @@ const ScheduleStep3 = () => {
                     >
                         {/* /> */}
                         <div className='flex gap-2'>
-                            {data &&
+                            {
+                                data &&
                                 data.map((e) => {
-                                    return <PlanCard plan={e} />
+                                    return <PlanCard key={e.planId} plan={e} />
                                 })
                             }
                         </div>
@@ -101,37 +161,15 @@ const ScheduleStep3 = () => {
                             </RadioGroup>
                         </FormControl>
                     )}
-                    {/* 
-          {!male && (
-            <FormControl>
-              <FormLabel id='demo-radio-buttons-group-label'>
-                morning batch
-              </FormLabel>
-              <RadioGroup
-                aria-labelledby='demo-radio-buttons-group-label'
-                defaultValue=' 7:00 to 8:00'
-                name='radio-buttons-group'
-              >
-                <FormControlLabel
-                  value=' 7:00 to 8:00'
-                  control={<Radio />}
-                  label='7:00 to 8:00'
-                />
-                <FormControlLabel
-                  value='9:00 to 11:00'
-                  control={<Radio />}
-                  label='9:00 to 11:00'
-                />
-                <FormControlLabel
-                  value='11:00 to 12:000'
-                  control={<Radio />}
-                  label='11:00 to  12:00'
-                />
-              </RadioGroup>
-            </FormControl>
-          )} */}
                 </div>
             </div>
+            <Button
+                variant='contained'
+                color='secondary'
+                onClick={handleSubscription}
+            >
+                save and continue
+            </Button>
         </div>
     )
 }

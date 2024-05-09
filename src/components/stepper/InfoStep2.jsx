@@ -11,27 +11,24 @@ const InfoStep2 = () => {
     const [pdf, setPdf] = useState(null)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     const data = JSON.parse(localStorage.getItem('userData'))
-    console.log(data._id)
 
     async function handleFileChange(e) {
         const file = e.target.files[0]
-        console.log(file.name)
-        console.log(file.type == 'application/pdf')
         // Optionally, you can validate the file type here
         if (file && file.type === 'application/pdf') {
             setPdf(file)
-            console.log(pdf)
         } else {
             setPdf(null)
             alert('Please select a PDF file.')
         }
     }
 
-    console.log(pdf)
 
     const formData = new FormData()
     formData.append('fitness', pdf)
+    formData.append('userId', data._id)
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -39,7 +36,7 @@ const InfoStep2 = () => {
             alert('please select file')
             return
         }
-        const response = dispatch(uploadFitness([formData, data._id]))
+        const response = await dispatch(uploadFitness(formData))
         console.log(response)
     }
     return (
@@ -63,13 +60,13 @@ const InfoStep2 = () => {
                     >
                         upload file
                     </button>
-                    <button
+                    {/* <button
                         type='button'
                         className='text-white bg-gradient-to-r flex gap-2 text-lg  items-center justify-center  from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg  px-5 py-2.5 text-center me-2 mb-2 '
                     >
                         <FaEye />
-                        view docs
-                    </button>
+                        view docs       
+                    </button> */}
                 </div>
             </div>
         </div>

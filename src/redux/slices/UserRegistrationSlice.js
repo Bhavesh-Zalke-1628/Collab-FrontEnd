@@ -42,9 +42,8 @@ export const getUserRegistration = createAsyncThunk('/application', async (data)
 
 
 export const uploadFitness = createAsyncThunk('/fitness', async (data) => {
-
     console.log(data)
-    const response = axiosInstance.post(`user/${data[1]}/swim/document`, data)
+    const response = axiosInstance.post(`/user/swim/document`, data)
     console.log(response)
     toast.promise(response, {
         loading: 'Wait!! Uploading pdf...',
