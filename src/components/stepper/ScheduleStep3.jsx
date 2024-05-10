@@ -13,6 +13,9 @@ import PlanCard from '../Constant/PlanCard'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { getRazorPayId, purchaseCourseBundle, verifyUserPayment } from '../../redux/slices/paymentSlice'
+import { BiRupee } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
+
 
 const ScheduleStep3 = () => {
     const [male, setmale] = useState(true)
@@ -28,11 +31,11 @@ const ScheduleStep3 = () => {
 
     const razorpayKey = useSelector((state) => state?.razorpay?.key);
     const subscription_id = useSelector((state) => state?.razorpay?.subscription_id);
+    console.log('subscription_id', subscription_id)
 
 
-    const payment = useSelector((state) => state.razorpay)
-
-    const dataSet = useSelector((state) => state?.auth?.data)
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    console.log('dataBase', userData._id)
 
     const paymentDetails = {
         razorpay_payment_id: "",
@@ -75,16 +78,17 @@ const ScheduleStep3 = () => {
     }
 
 
-    const formData = new FormData()
-    formData.append('userId', dataSet._id)
+
+
     async function load() {
+        getplan()
         await dispatch(getRazorPayId());
-        await dispatch(purchaseCourseBundle(formData));
+        await dispatch(purchaseCourseBundle(userData._id));
     }
 
+
     useEffect(() => {
-        load();
-        getplan()
+        load()
     }, []);
 
     return (

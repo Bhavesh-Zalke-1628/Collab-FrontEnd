@@ -61,11 +61,12 @@ const userRegistrationSlice = createSlice({
             .addCase(userRegistration.fulfilled, async (state, action) => {
                 console.log(action.payload.user)
                 state.registerUserData = action.payload.user
-                localStorage.setItem('userData', JSON.stringify(action.payload.user))
+                localStorage.setItem('userData', action.payload.user)
             })
             .addCase(getUserRegistration.fulfilled, (state, action) => {
-                console.log(action.payload)
+                console.log(action.payload.user)
                 state.registerUserData = action.payload.user
+                localStorage.setItem('userData', action.payload.user)
             })
     }
 })
