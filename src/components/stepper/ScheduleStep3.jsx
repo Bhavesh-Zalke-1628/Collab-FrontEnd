@@ -13,7 +13,6 @@ import PlanCard from '../Constant/PlanCard'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
 import { getRazorPayId, purchaseCourseBundle, verifyUserPayment } from '../../redux/slices/paymentSlice'
-import { BiRupee } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 
 
@@ -22,7 +21,7 @@ const ScheduleStep3 = () => {
     const [morning, setmorning] = useState()
     const [data, setData] = useState()
     console.log('start')
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     async function getplan() {
         const response = await axios.get('http://localhost:5000/api/plan/getAllPlan')
@@ -66,10 +65,12 @@ const ScheduleStep3 = () => {
                 paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
                 paymentDetails.razorpay_signature = response.razorpay_signature;
                 paymentDetails.razorpay_subscription_id = response.razorpay_subscription_id;
+                paymentDetails.id = userData._id
                 toast.success("Payment successfull");
                 const res = await dispatch(verifyUserPayment(paymentDetails));
                 console.log('navigate res', res)
-                // toast.success(res?.payload?.msg);
+                toast.success(res?.payload?.msg);
+                console.log(res?.payload?.success)
                 res?.payload?.success ? navigate("/checkout/success") : navigate("/checkout/fail");
             }
         }

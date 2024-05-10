@@ -24,6 +24,8 @@ import UserProfile from './pages/UserProfile.jsx'
 import InfoStep1 from './components/stepper/InfoStep1.jsx'
 import { Toaster } from 'react-hot-toast'
 import Application from './pages/Application.jsx'
+import CheckOutSuccess from './pages/Payment/CheckOutSuccess.jsx'
+import CheckOutFail from './pages/Payment/CheckOutFail.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +38,8 @@ const router = createBrowserRouter(
       <Route path='/user/profile' element={<UserProfile />}></Route>
       {/* <Route path='/process' element={<InfoStep1 />}></Route> */}
       <Route path='/application' element={<Application />}></Route>
+      <Route path='/checkout/success' element={<CheckOutSuccess />}></Route>
+      <Route path='/checkout/fail' element={<CheckOutFail />}></Route>
     </Route>
   )
 )

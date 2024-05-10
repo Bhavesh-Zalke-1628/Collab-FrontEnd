@@ -13,7 +13,7 @@ const InfoStep2 = () => {
     const navigate = useNavigate()
 
     const data = JSON.parse(localStorage.getItem('userData'))
-
+    console.log(data)
     async function handleFileChange(e) {
         const file = e.target.files[0]
         // Optionally, you can validate the file type here
@@ -37,8 +37,9 @@ const InfoStep2 = () => {
             return
         }
         const response = await dispatch(uploadFitness(formData))
-        console.log(response)
+        console.log('response', response)
     }
+    console.log(data)
     return (
         <div>
             <div className=' flex items-center  justify-around bg-slate-100 p-5 m-5 shadow-md'>
@@ -60,6 +61,8 @@ const InfoStep2 = () => {
                     >
                         upload file
                     </button>
+
+
                     {/* <button
                         type='button'
                         className='text-white bg-gradient-to-r flex gap-2 text-lg  items-center justify-center  from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg  px-5 py-2.5 text-center me-2 mb-2 '

@@ -50,6 +50,7 @@ export const uploadFitness = createAsyncThunk('/fitness', async (data) => {
         success: 'File upload successfully',
         error: 'Failed to upload the file'
     })
+    return (await response).data
 })
 
 const userRegistrationSlice = createSlice({
@@ -61,12 +62,16 @@ const userRegistrationSlice = createSlice({
             .addCase(userRegistration.fulfilled, async (state, action) => {
                 console.log(action.payload.user)
                 state.registerUserData = action.payload.user
-                localStorage.setItem('userData', action.payload.user)
+                localStorage.setItem('userData', JSON.stringify(action.payload.user))
             })
             .addCase(getUserRegistration.fulfilled, (state, action) => {
                 console.log(action.payload.user)
                 state.registerUserData = action.payload.user
-                localStorage.setItem('userData', action.payload.user)
+                localStorage.setItem('userData', action.payload)
+            })
+            .addCase(uploadFitness.fulfilled, async (state, action) => {
+                localStorage.setItem('userData', JSON.stringify(action?.payload?.user))
+                state.registerUserData = action.payload.user
             })
     }
 })

@@ -37,10 +37,11 @@ export const purchaseCourseBundle = createAsyncThunk("/purchaseCourse", async (d
 export const verifyUserPayment = createAsyncThunk("/payments/verify", async (data) => {
     console.log(data)
     try {
-        const response = await axiosInstance.post(`/payment/razorpay/verify/${data[1]}`, {
+        const response = await axiosInstance.post(`/payment/razorpay/verify`, {
             razorpay_payment_id: data.razorpay_payment_id,
             razorpay_subscription_id: data.razorpay_subscription_id,
-            razorpay_signature: data.razorpay_signature
+            razorpay_signature: data.razorpay_signature,
+            id: data.id
         });
         return response.data;
     } catch (error) {
