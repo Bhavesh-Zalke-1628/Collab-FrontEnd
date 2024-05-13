@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getUserData, logout } from '../redux/slices/authSlices'
 const Navbar = () => {
   const { isLoggedIn } = useSelector((state) => state?.auth)
-  // console.log(isLoggedIn)
+  console.log(isLoggedIn)
   const { data } = useSelector((state) => state?.auth)
   // console.log(data)
   const [loading, setLoading] = useState(true)
@@ -72,23 +72,19 @@ const Navbar = () => {
                             </Link>
                           </>
                           :
-                          <>
+                          <>{
+                            isLoggedIn &&
                             <Link
                               to='/services'
                               className='text-gray-700 hover:text-indigo-600 text-md '
                             >
                               Services
                             </Link>
+                          }
                           </>
                       }
                     </li>
                     <li>
-                      {/* <Link
-                        to='/product'
-                        className='text-gray-700 hover:text-indigo-600 text-md '
-                      >
-                        Products
-                      </Link> */}
                     </li>
                     <li>
                       <Link

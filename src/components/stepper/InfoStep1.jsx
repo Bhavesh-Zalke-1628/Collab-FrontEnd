@@ -120,9 +120,8 @@ const InfoStep1 = () => {
                             <img className="w-24 h-24 rounded-full m-auto" src={previewImage} />
                         ) : (
                             <>
-                                {/* <div className=' bg-yellow-500'> */}
                                 <BsPersonCircle className='w-20 h-20 rounded-full m-auto text-black' />
-                                {/* </div> */}
+                                <p className=' capitalize mt-3 font-semibold  text-xl'>Upload profile picture</p>
                             </>
                         )}
                     </label>
@@ -136,10 +135,10 @@ const InfoStep1 = () => {
                     />
                 </div>
             </div>
-
+            <p className=' text-xl'>Enter full name</p>
             <TextField
                 id='name'
-                label='full Name'
+                label='Enter your full name'
                 variant='outlined'
                 placeholder='Enter Your Name'
                 fullWidth
@@ -148,9 +147,10 @@ const InfoStep1 = () => {
                 onChange={onInputChange}
                 value={data.name}
             />
+            <p className=' text-xl'>Enter email</p>
             <TextField
                 id='email'
-                label='E-mail'
+                label='Enter Your E-mail Address'
                 variant='outlined'
                 placeholder='Enter Your E-mail Address'
                 fullWidth
@@ -159,6 +159,7 @@ const InfoStep1 = () => {
                 value={data.email}
                 onChange={onInputChange}
             />
+            <p className=' text-xl'>Enter phone number</p>
             <TextField
                 id='phone-number'
                 label='Phone Number'
@@ -170,9 +171,10 @@ const InfoStep1 = () => {
                 value={data.contact}
                 onChange={onInputChange}
             />
+            <p className=' text-xl'>Enter Alternate number</p>
             <TextField
                 id='alternate-phone'
-                label='Alternate Phone'
+                label='Enter Your Alternate Phone'
                 variant='outlined'
                 placeholder='Enter Your Alternate Phone'
                 fullWidth
@@ -181,6 +183,7 @@ const InfoStep1 = () => {
                 name='alternatePhone'
                 value={data.alternatePhone}
             />
+            <p className=' text-xl'>Enter address</p>
             <TextField
                 id='address'
                 label='address'
@@ -192,23 +195,27 @@ const InfoStep1 = () => {
                 name='address'
                 value={data.address}
             />
-            <div className='mx-20 flex items-center  justify-evenly  mb-20'>
-                <div>
-                    <InputLabel id='demo-select-small-label'>Gender</InputLabel>
-                    <Select
-                        labelId='demo-select-small-label'
-                        id='demo-select-small'
-                        onChange={onInputChange}
-                        name='gender'
-                    >
-                        <MenuItem value=''>
-                            <em>None</em>
-                        </MenuItem>
-                        <MenuItem value='male'>Male</MenuItem>
-                        <MenuItem value='female'>Female</MenuItem>
-                        <MenuItem value='other'>Other</MenuItem>
-                    </Select>
+            <div className=' flex items-center justify-around'>
+                <div className='mx-20 flex items-center gap-4'>
+                    <p className=' text-xl'>please select gender</p>
+                    <div>
+                        <InputLabel id='demo-select-small-label'>Gender</InputLabel>
+                        <Select
+                            labelId='demo-select-small-label'
+                            id='demo-select-small'
+                            onChange={onInputChange}
+                            name='gender'
+                        >
+                            <MenuItem value=''>
+                                <em>None</em>
+                            </MenuItem>
+                            <MenuItem value='male'>Male</MenuItem>
+                            <MenuItem value='female'>Female</MenuItem>
+                            <MenuItem value='other'>Other</MenuItem>
+                        </Select>
+                    </div>
                 </div>
+
                 <Button
                     variant='contained'
                     color='secondary'
@@ -218,6 +225,7 @@ const InfoStep1 = () => {
                     save and contiue
                 </Button>
             </div>
+
         </>
     )
 }

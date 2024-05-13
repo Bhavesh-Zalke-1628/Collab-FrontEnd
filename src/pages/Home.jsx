@@ -136,10 +136,9 @@ const Home = () => {
                 <h1 className='text-[3rem]'>swimming and coaching</h1>
                 <div className='ml-96 mt-11'>
                   <Link
-                    to='services
-'
+                    to='services'
                   >
-                    <button class='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
+                    <button className='bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded'>
                       get start
                     </button>
                   </Link>

@@ -1,11 +1,16 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getSingleUSer } from '../redux/slices/UserRegistrationSlice';
 
 function UserProfile() {
-    const { data } = useSelector((state) => state?.auth)
-    console.log(data)
+    const data = JSON.parse(localStorage.getItem('userData'))
+    console.log(data._id)
+    const dispatch = useDispatch()
+    const res = dispatch(getSingleUSer(data._id))
+
     return (
-        <div className=' min-h-[82vh] flex items-center justify-center'>
+        <div className=' min-h-[82vh] flex items-center justify-center gap-2 flex-wrap'>
             <div className=' w-fit px-5 py-4 rounded-md h-28 bg-yellow-500 '>
                 <h1>
                     {data?.username}
@@ -17,7 +22,8 @@ function UserProfile() {
                     {data?.Mo_number}
                 </h1>
             </div>
-        </div>
+
+        </div >
 
     )
 }

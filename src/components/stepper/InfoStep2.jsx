@@ -5,7 +5,7 @@ import { FaEye } from 'react-icons/fa'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { uploadFitness } from '../../redux/slices/UserRegistrationSlice'
-
+import { MdCloudUpload } from "react-icons/md";
 const InfoStep2 = () => {
 
     const [pdf, setPdf] = useState(null)
@@ -42,16 +42,20 @@ const InfoStep2 = () => {
     console.log(data)
     return (
         <div>
-            <div className=' flex items-center  justify-around bg-slate-100 p-5 m-5 shadow-md'>
+            <div className='flex items-center justify-around bg-slate-100 p-5 m-5 shadow-md'>
                 <div className='flex items-center justify-center'>
-                    <input
-                        type='file'
-                        required
-                        placeholder='Enter your File..'
-                        className='bg-transparent px-2 py-1 border'
-                        onChange={handleFileChange}
-                        accept=' application/pdf'
-                    />
+                    <label className=' flex items-center justify-center flex-col border-2 hover:scale-95 px-5 py-3 rounded-lg cursor-pointer'>
+                        <MdCloudUpload className='  text-4xl' />
+                        upload the fitness certificate
+                        <input
+                            type='file'
+                            required
+                            placeholder='Enter your File..'
+                            className='bg-transparent px-2 py-1 border hidden'
+                            onChange={handleFileChange}
+                            accept=' application/pdf'
+                        />
+                    </label>
                 </div>
                 <div className='flex gap-5'>
                     <button
@@ -61,17 +65,33 @@ const InfoStep2 = () => {
                     >
                         upload file
                     </button>
-
-
-                    {/* <button
-                        type='button'
-                        className='text-white bg-gradient-to-r flex gap-2 text-lg  items-center justify-center  from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg  px-5 py-2.5 text-center me-2 mb-2 '
-                    >
-                        <FaEye />
-                        view docs       
-                    </button> */}
                 </div>
             </div>
+            {/* <div className=' flex items-center justify-around bg-slate-100 p-5 m-5 shadow-md'>
+                <div className='flex items-center justify-center'>
+                    <label className=' flex items-center justify-center flex-col border-2 hover:scale-95 px-5 py-3 rounded-lg cursor-pointer'>
+                        <MdCloudUpload className='  text-4xl' />
+                        upload aadhar card
+                        <input
+                            type='file'
+                            required
+                            placeholder='Enter your File..'
+                            className='bg-transparent px-2 py-1 border hidden'
+                            onChange={handleFileChange}
+                            accept=' application/pdf'
+                        />
+                    </label>
+                </div>
+                <div className='flex gap-5'>
+                    <button
+                        type='button'
+                        class='text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
+                        onClick={handleSubmit}
+                    >
+                        upload file
+                    </button>
+                </div>
+            </div> */}
         </div>
     )
 }

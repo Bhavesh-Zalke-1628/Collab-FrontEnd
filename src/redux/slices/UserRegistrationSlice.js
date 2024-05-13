@@ -5,7 +5,8 @@ import toast from "react-hot-toast"
 import { json } from "react-router-dom"
 
 const initialState = {
-    registerUserData: localStorage.getItem('userData') || {}
+    registerUserData: localStorage.getItem('userData') || [],
+    singleUser: localStorage.getItem('singleUser') || {}
 }
 
 
@@ -28,8 +29,8 @@ export const userRegistration = createAsyncThunk('/process', async (data) => {
 
 
 
-export const getUserRegistration = createAsyncThunk('/application', async (data) => {
-    const response = axiosInstance.get('/user/user-info', data)
+export const getUserRegistration = createAsyncThunk('/application', async () => {
+    const response = axiosInstance.get('/user/user-info')
     console.log(response.data)
     toast.promise(response, {
         loading: "Wait load the user application's  ",
@@ -37,6 +38,19 @@ export const getUserRegistration = createAsyncThunk('/application', async (data)
         error: "Failed to data"
     })
     console.log(response)
+    return (await response).data
+})
+
+
+export const getSingleUSer = createAsyncThunk('/user/profile', async (data) => {
+    console.log(data)
+    const response = axiosInstance.get(`/user/user-one/${data}`)
+    toast.promise(response, {
+        loading: "Wait !! Loading the user data",
+        success: "User data load successfully",
+        error: "Failed to user data"
+    })
+    console.log((await response).data)
     return (await response).data
 })
 
@@ -67,11 +81,15 @@ const userRegistrationSlice = createSlice({
             .addCase(getUserRegistration.fulfilled, (state, action) => {
                 console.log(action.payload.user)
                 state.registerUserData = action.payload.user
-                localStorage.setItem('userData', action.payload)
+                localStorage.setItem('userData', JSON.stringify(action.payload))
             })
             .addCase(uploadFitness.fulfilled, async (state, action) => {
                 localStorage.setItem('userData', JSON.stringify(action?.payload?.user))
                 state.registerUserData = action.payload.user
+            })
+            .addCase(getSingleUSer.fulfilled, async (state, action) => {
+                state.singleUser = action.payload.user,
+                    localStorage.setItem('singleUser', (action.payload.user))
             })
     }
 })
