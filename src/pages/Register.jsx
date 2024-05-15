@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { isEmail, isPassword } from '../Helper/regexMatcher'
 import { RxCrossCircled } from 'react-icons/rx'
 import { Button } from '@mui/material'
-import { getRazorPayId, purchaseCourseBundle } from '../redux/slices/registrationPaymentSlice'
+import { getRazorPayId, purchaseCourseBundle, verifyUserPayment } from '../redux/slices/registrationPaymentSlice'
 const Register = () => {
   const [registeData, setregisteData] = useState({
     username: '',
@@ -34,10 +34,9 @@ const Register = () => {
     razorpay_subscription_id: "",
     razorpay_signature: ""
   }
+  console.log('razorpayKey', razorpayKey)
 
   async function handleSubscription(e) {
-    await dispatch(purchaseCourseBundle());
-    console.log('razorpayKey', razorpayKey)
     e.preventDefault();
     console.log('heello')
     if (!razorpayKey || !subscription_id) {
@@ -47,10 +46,10 @@ const Register = () => {
     const options = {
       key: razorpayKey,
       subscription_id: subscription_id,
-      name: "e-Shiksha Pvt. Ltd.",
+      name: " यवतमाळ क्रीडा संकुलन समिती",
       description: "Subscription",
       theme: {
-        color: '#F37254'
+        color: '#0000'
       },
 
       handler: async function (response) {
@@ -105,10 +104,11 @@ const Register = () => {
     }
 
     setShow(true)
-    console.log(show)
-    await dispatch(getRazorPayId());
 
-    console.log("All data available", registeData)
+    await dispatch(getRazorPayId());
+    await dispatch(purchaseCourseBundle());
+
+
     const formData = new FormData()
     formData.append('username', registeData.username)
     formData.append('email', registeData.email)
