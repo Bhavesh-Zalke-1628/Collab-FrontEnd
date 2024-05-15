@@ -5,11 +5,12 @@ import { FaPencilAlt } from 'react-icons/fa'
 import { FaPhoneFlip } from 'react-icons/fa6'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
-import React, { useState } from 'react'
-import { createAccount } from '../redux/slices/authSlices'
-import { useDispatch } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { isEmail, isPassword } from '../Helper/regexMatcher'
-
+import { RxCrossCircled } from 'react-icons/rx'
+import { Button } from '@mui/material'
+import { getRazorPayId, purchaseCourseBundle } from '../redux/slices/registrationPaymentSlice'
 const Register = () => {
   const [registeData, setregisteData] = useState({
     username: '',
@@ -18,8 +19,55 @@ const Register = () => {
     Mo_number: ''
   })
 
+  const [show, setShow] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
+  const data = useSelector((state) => state?.userRegistration)
+  console.log(data)
+  const razorpayKey = useSelector((state) => state?.userRegistration?.RegisterKey);
+  const subscription_id = useSelector((state) => state?.userRegistration?.RegistraterSubscription_id);
+
+
+  const paymentDetails = {
+    razorpay_payment_id: "",
+    razorpay_subscription_id: "",
+    razorpay_signature: ""
+  }
+
+  async function handleSubscription(e) {
+    await dispatch(purchaseCourseBundle());
+    console.log('razorpayKey', razorpayKey)
+    e.preventDefault();
+    console.log('heello')
+    if (!razorpayKey || !subscription_id) {
+      toast.error("Something went wrong");
+      return;
+    }
+    const options = {
+      key: razorpayKey,
+      subscription_id: subscription_id,
+      name: "e-Shiksha Pvt. Ltd.",
+      description: "Subscription",
+      theme: {
+        color: '#F37254'
+      },
+
+      handler: async function (response) {
+        paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
+        paymentDetails.razorpay_signature = response.razorpay_signature;
+        paymentDetails.razorpay_subscription_id = response.razorpay_subscription_id;
+        toast.success("Payment successfull");
+        const res = await dispatch(verifyUserPayment(paymentDetails));
+        console.log('navigate res', res)
+        toast.success(res?.payload?.msg);
+        res?.payload?.success ? navigate("/checkout/success") : navigate("/checkout/fail");
+      }
+    }
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
 
   function handleUserInput(e) {
     const { name, value } = e.target
@@ -30,11 +78,14 @@ const Register = () => {
     console.log(registeData)
   }
 
+
   const handleRegister = async e => {
     e.preventDefault()
     console.log('hello')
-
-    console.log('dat')
+    if (!registeData.username || !registeData.email || !registeData.Mo_number || !registeData.password) {
+      toast.error('All field are required')
+      return
+    }
     // checking name field length
     if (registeData.username.length < 5) {
       toast.error('Name should be atleast of 5 characters')
@@ -53,6 +104,9 @@ const Register = () => {
       return
     }
 
+    setShow(true)
+    console.log(show)
+    await dispatch(getRazorPayId());
 
     console.log("All data available", registeData)
     const formData = new FormData()
@@ -63,13 +117,13 @@ const Register = () => {
 
     console.log(formData)
     // console.log('fromData from Signup', formData)
-
-    const response = await dispatch(createAccount(formData))
+    // const response = await dispatch(createAccount(formData))
 
     localStorage.setItem('data', true)
-    if (response?.payload?.success) {
-      navigate('/login')
-    }
+    // if (response?.payload?.success) {
+    //   setShow(true)
+    // }
+
 
     setregisteData({
       username: '',
@@ -80,6 +134,9 @@ const Register = () => {
 
   }
 
+  useEffect(() => {
+    dispatch(getRazorPayId());
+  }, []);
   return (
     <>
       <section className='authPage h-[100vh] w-[100vw] bg-blue-200'>
@@ -101,6 +158,32 @@ const Register = () => {
                 <FaRegUser />
               </div>
             </div> */}
+            <div>
+              {
+                show &&
+                <div className=' absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 z-10 flex items-center justify-center'>
+                  <div className=' w-[50%] h-3/6 bg-gray-600 rounded-lg shadow-[0_0_10px_black] flex flex-col items-center justify-center'>
+                    {
+                      localStorage.setItem('numberOfCourses', 0)
+                    }
+                    <p className=' text-black text-2xl font-semibold'>
+                      you have the Rs.100 payment as the registration fee
+                    </p>
+                    <Button
+                      onClick={handleSubscription}
+                    >
+                      proceed to payment
+                    </Button>
+                  </div>
+                  <div>
+                    <RxCrossCircled
+                      onClick={() => setShow(false)}
+                      className='text-4xl text-white absolute top-36 cursor-pointer hover:text-red-500 transition-all ease-in-out duration-300 '
+                    />
+                  </div>
+                </div>
+              }
+            </div>
             <div className='inputTag '>
               <label>Name</label>
               <div className='flex  item-center '>
