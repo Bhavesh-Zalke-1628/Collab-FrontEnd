@@ -91,6 +91,7 @@ function UserRegistration() {
 
     return (
         <div>
+            <div></div>
             <div className="p-8 rounded border border-gray-200 mt-10">
                 <h1 className="font-medium text-3xl">Add User</h1>
                 <p className="text-gray-600 mt-6">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos dolorem vel cupiditate laudantium dicta.</p>
