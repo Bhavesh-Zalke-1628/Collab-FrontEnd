@@ -4,10 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useDispatch } from 'react-redux';
 function CheckOutSuccess() {
-    const dispatch = useDispatch()
-    // useEffect(() => {
-    //     dispatch(getUserData())
-    // }, []);
+
     return (
         <>
             <div className="min-h-[90vh] flex items-center justify-center ">
@@ -22,7 +19,6 @@ function CheckOutSuccess() {
                             <p className="text-left">
                                 Now you can enjoy all the courses.
                             </p>
-
                         </div>
                         <AiFillCheckCircle className="text-green-500 text-5xl" />
                     </div>

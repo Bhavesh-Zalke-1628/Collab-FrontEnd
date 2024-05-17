@@ -210,10 +210,10 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant='h6' sx={{ my: 2 }}>
-        {/* <img src={firstLogo} className='w-[5rem]' alt='' /  > */}
+      {/* <Typography variant='h6' sx={{ my: 2 }}>
+        <img src={firstLogo} className='w-[5rem]' alt='' /  >
         जिल्हा क्रीडा संकुल समिति
-      </Typography>
+      </Typography> */}
       <Divider />
       <List>
         {navItems.map(item => (
@@ -258,13 +258,14 @@ function Navbar(props) {
           </Drawer>
         </nav>
 
-        <AppBar component='nav'>
-          <Toolbar>
-            {/* <img className='w-[4.5rem] m-1 p-1' src={firstLogo} alt='logo' /> */}
-
+        <AppBar component='nav' >
+          <Toolbar c>
+            {/* <img className='w-[4.5rem] m-1 p-1' src={} alt='logo' /> */}
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
-              जिल्हा क्रीडा संकुल समिति
+              जिल्हा क्रीडा संकुल समिती, यवतमाळ
             </Typography>
+
+
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
               {navItems.map(item => (
                 <Button
@@ -276,39 +277,41 @@ function Navbar(props) {
                 </Button>
               ))}
             </Box>
-            {!isLoggedIn && (
+
+
+            {/* {!isLoggedIn && (
               <Link to='/batches'>
                 <a className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'>
                   get start
                 </a>
               </Link>
-            )}
+            )} */}
 
             {isLoggedIn && (
               <Link to='/register'>
                 <a
-                  className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100
-                '
+                  className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
                   onClick={handleLogout}
                 >
                   logout
                 </a>
               </Link>
             )}
+
+
+
             <IconButton
               color='inherit'
               aria-label='open drawer'
               edge='end'
               onClick={handleDrawerToggle}
-              sx={{ mr: 2, display: { sm: 'none' } }}
+              sx={{ mr: 4, display: { sm: 'none' } }}
             >
               <MenuIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
-        {/* <Box component='main' sx={{ p: 3 }}>
-          <Toolbar />
-        </Box> */}
+
       </Box>
     </div>
   )

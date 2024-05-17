@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRazorPayId, purchaseCourseBundle } from '../redux/slices/registrationPaymentSlice';
+import { getRazorPayId, purchaseCourseBundle, verifyUserPayment } from '../redux/slices/registrationPaymentSlice';
 import toast from 'react-hot-toast';
 function UserRegistration() {
     const [open, setOpen] = useState(false);
@@ -63,9 +63,10 @@ function UserRegistration() {
                 paymentDetails.razorpay_subscription_id = response.razorpay_subscription_id;
                 toast.success("Payment successfull");
                 const res = await dispatch(verifyUserPayment(paymentDetails));
+                console.log(res)
                 console.log('navigate res', res)
                 toast.success(res?.payload?.msg);
-                res?.payload?.success ? navigate("/checkout/success") : navigate("/checkout/fail");
+                res?.payload?.success ? navigate("/user-registration/success") : navigate("/checkout/fail");
             }
         }
         const paymentObject = new window.Razorpay(options);
@@ -90,7 +91,7 @@ function UserRegistration() {
 
     return (
         <div>
-            <div className="p-8 rounded border border-gray-200">
+            <div className="p-8 rounded border border-gray-200 mt-10">
                 <h1 className="font-medium text-3xl">Add User</h1>
                 <p className="text-gray-600 mt-6">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos dolorem vel cupiditate laudantium dicta.</p>
 

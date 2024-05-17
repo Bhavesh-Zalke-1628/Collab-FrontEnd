@@ -27,6 +27,7 @@ import { Toaster } from 'react-hot-toast'
 import RegistrationPaymentSuccess from './pages/Payment/RegistrationPaymentSuccess.jsx'
 import Batches from './pages/Batches.jsx'
 import UserRegistration from './pages/UserRegistration.jsx'
+import UserRegistrationPaymentSuccess from './pages/Payment/UserRegistrationPaymentSuccess.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
       <Route path='/checkout/fail' element={<CheckOutFail />}></Route> */}
       <Route path="/register/successfull" element={<RegistrationPaymentSuccess />}></Route>
       <Route path='/user-registration' element={<UserRegistration />}></Route>
+      <Route path='/user-registration/success' element={<UserRegistrationPaymentSuccess />}></Route>
     </Route>
   )
 )
