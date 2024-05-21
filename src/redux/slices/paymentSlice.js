@@ -65,18 +65,18 @@ const paymentSlice = createSlice({
             })
             .addCase(purchaseCourseBundle.fulfilled, (state, action) => {
                 console.log('action in  verifyUserPayment full >', action)
-                // console.log(action?.payload)
-                toast.success(action?.payload.msg)
+                console.log(action?.payload)
+                // toast.success(action?.payload.msg)
                 state.subscription_id = action?.payload?.subscription_id;
             })
             .addCase(verifyUserPayment.rejected, (state, action) => {
                 console.log('action in  verifyUserPayment rejected >', action)
-                toast.success(action?.payload?.message);
+                toast.success(action?.payload?.msg);
                 state.isPaymentVerified = action?.payload?.success;
             })
 
             .addCase(verifyUserPayment.fulfilled, (state, action) => {
-                toast.success(action?.payload?.message);
+                toast.success(action?.payload?.msg);
                 state.isPaymentVerified = action?.payload?.success;
                 state.status = action?.asubscription?.status
             })

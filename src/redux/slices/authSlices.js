@@ -3,15 +3,21 @@ import { toast } from "react-hot-toast";
 import axiosInstance from "../../Helper/axiosInstance";
 const initialState = {
     isLoggedIn: localStorage.getItem('isLoggedIn') || false,
-    data: JSON.parse(localStorage.getItem('data')) || {}
+    data: (localStorage.getItem('data')) || {}
 }
 
 
 
 export const createAccount = createAsyncThunk("/register", async (data) => {
+    const config = {
+        headers: {
+            'content-Type': 'application/json'
+        }
+    }
     try {
         console.log('hello')
-        const res = axiosInstance.post("/auth/register", data);
+        const res = axiosInstance.post("/auth/register", data, config);
+        console.log(res)
         toast.promise(res, {
             loading: "Wait! creating your account",
             success: (data) => {
@@ -22,7 +28,8 @@ export const createAccount = createAsyncThunk("/register", async (data) => {
         });
         return (await res).data;
     } catch (error) {
-        toast.error(error?.response?.data?.message);
+        console.log(error)
+        toast.error(error?.response?.data?.msg);
     }
 })
 

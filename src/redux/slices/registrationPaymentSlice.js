@@ -27,6 +27,8 @@ export const purchaseCourseBundle = createAsyncThunk("/purchaseCourse", async ()
     console.log('purchaseCourseBundle')
     try {
         const response = await axiosInstance.post('/user/payment/razorpay/subscribe');
+        console.log('response', response)
+
         console.log(response)
         return response.data;
     } catch (error) {
@@ -60,19 +62,19 @@ const userPaymentSlice = createSlice({
                 state.RegisterKey = action?.payload?.key;
             })
             .addCase(purchaseCourseBundle.fulfilled, (state, action) => {
-                console.log('action in  verifyUserPayment full >', action)
-                // console.log(action?.payload)
-                toast.success(action?.payload.msg)
+                console.log('action in purchaseCourseBundle full >', action.payload)
+                console.log(action.payload.data)
+                // toast.success(action?.payload.data?.msg)
                 state.RegistraterSubscription_id = action?.payload?.subscription_id;
             })
             .addCase(verifyUserPayment.rejected, (state, action) => {
                 console.log('action in  verifyUserPayment rejected >', action)
-                toast.success(action?.payload?.message);
+                toast.success(action?.payload?.msg);
                 state.RegisterisPaymentVerified = action?.payload?.success;
             })
 
             .addCase(verifyUserPayment.fulfilled, (state, action) => {
-                toast.success(action?.payload?.message);
+                toast.success(action?.payload?.msg);
                 state.RegisterisPaymentVerified = action?.payload?.success;
                 state.status = action?.asubscription?.status
             })
