@@ -13,15 +13,15 @@ const initialState = {
 export const userRegistration = createAsyncThunk('/process', async (data) => {
     try {
 
-        const response = axiosInstance.post('/user/swim/register', data)
+        const response = axiosInstance.post(`/user/swim/register:${data[1]}`, data[0])
         console.log(response)
         toast.promise(response, {
             loading: "Completing step 1",
             success: "Step one completed successfully",
-            error: "Failed to create Cource"
+            error: "Failed to complte step 1"
         })
-        console.log(response)
-        return (await response).data
+        console.log((await response).data)
+        return (await response).data.user
     } catch (error) {
         console.log(error)
     }

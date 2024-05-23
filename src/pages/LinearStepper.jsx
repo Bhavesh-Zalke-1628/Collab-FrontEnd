@@ -13,20 +13,7 @@ import { userRegistration } from '../redux/slices/UserRegistrationSlice'
 import InfoStep2 from '../components/stepper/InfoStep2'
 import ScheduleStep3 from '../components/stepper/ScheduleStep3'
 
-// import { TextField, makeStyles } from '@mui/material'
 
-// const useStyles = makeStyles(theme => ({
-//   button: {
-//     marginRight: theme.spacing(1)
-//   }
-// }))
-
-// const [data, setData] = useState({
-//     name: "",
-//     email: '',
-//     contact: Number,
-//     address: ""
-// })
 function getSteps() {
     return ['Basic information', 'Personal Document', 'schedule ', 'Payment']
 }
@@ -87,7 +74,7 @@ const LinaerStepper = () => {
 
 
     return (
-        <div>
+        <div className=' mt-10'>
             <Stepper alternativeLabel activeStep={activeStep}>
                 {steps.map((step, index) => {
                     const labelProps = {}

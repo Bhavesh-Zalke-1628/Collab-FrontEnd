@@ -243,9 +243,15 @@ function UserRegistration() {
                                     </div>
                                 </Link>
                             </div>
-                            <Button autoFocus onClick={() => navigate(-1)}>
-                                Cancel
-                            </Button>
+                            <Link
+                                to='/batches'
+                            >
+                                <Button
+                                    autoFocus
+                                >
+                                    Cancel
+                                </Button>
+                            </Link>
                         </div>
                     </Dialog>
                 </React.Fragment>
@@ -256,18 +262,3 @@ function UserRegistration() {
 
 export default UserRegistration
 
-
-
-//     < Select
-// labelId = 'demo-select-small-label'
-// id = 'demo-select-small'
-// onChange = { onInputChange }
-// name = 'gender'
-//     >
-//                         <MenuItem value=''>
-//                             <em>None</em>
-//                         </MenuItem>
-//                         <MenuItem value='male'>Male</MenuItem>
-//                         <MenuItem value='female'>Female</MenuItem>
-//                         <MenuItem value='other'>Other</MenuItem>
-//                     </ >

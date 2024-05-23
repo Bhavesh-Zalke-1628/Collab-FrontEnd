@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+import { CircularProgress, TextField } from '@mui/material'
 import React, { useState } from 'react'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -19,10 +19,10 @@ const InfoStep1 = () => {
     const navigate = useNavigate()
 
     const [previewImage, setPreviewImage] = useState("");
-
+    const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+    const [loading, setLoading] = useState(false);
     const user = useSelector((state) => state?.auth?.data)
-
-
+    console.log(user._id)
     const [data, setData] = useState({
         name: "",
         email: '',
@@ -63,8 +63,8 @@ const InfoStep1 = () => {
         formData.append('alternatePhone', data.alternatePhone)
         formData.append('profile', data.profile)
 
-        const response = await dispatch(userRegistration(formData))
-        console.log(response.data)
+        const response = await dispatch(userRegistration([formData, user._id]))
+        console.log('response', response)
     }
 
 
@@ -86,35 +86,11 @@ const InfoStep1 = () => {
         }
     }
 
-
-
-
     return (
         <>
-            <div className='flex items-center justify-center mt-10'>
+            <div className='flex items-center justify-center mt-4'>
                 <div className='flex items-center justify-center w-[70vw] md:w-[50vw] '>
-                    {/* <p>profile photo</p> */}
-                    {/* <label
-                        for='dropzone-file'
-                        className='flex flex-col items-center justify-center w-[50vw] md:w-[50vw]  h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600'
-                    >
-                        <p className='mb-2 text-sm text-gray-500 dark:text-gray-400'>
-                            {previewImage ? (
-                                <>
-                                    <img className="w-24 h-24 rounded-full m-auto" src={previewImage} />
-                                </>
-                            ) : (
-                                <>
-                                    <span className='font-semibold'>Click to upload</span>
-                                    <BsPersonCircle className='w-20 h-20 rounded-full m-auto text-white' />
-                                </>
-                            )}
-                        </p>
 
-                        <input
-                            type='file'
-                        />
-                    </label> */}
                     <label htmlFor="image_uploads" className="cursor-pointer">
                         {previewImage ? (
                             <img className="w-24 h-24 rounded-full m-auto" src={previewImage} />
@@ -215,14 +191,11 @@ const InfoStep1 = () => {
                         </Select>
                     </div>
                 </div>
-
-                <Button
-                    variant='contained'
-                    color='secondary'
-                    className=' mr-5'
-                    onClick={handleSubmit}
-                >
-                    save and contiue
+                <Button variant="contained" color="primary" onClick={handleSubmit} disabled={loading}>
+                    {loading ? <CircularProgress size={24} /> : 'Submit'}
+                </Button>
+                <Button variant="contained" color="secondary" disabled={isButtonDisabled}>
+                    Next
                 </Button>
             </div>
 

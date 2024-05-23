@@ -46,7 +46,7 @@ const Register = () => {
     }
     return (
         <>
-            <section className='authPage h-[100vh] w-[100vw] bg-blue-200'>
+            <section className='authPage h-[100vh] w-[100vw] bg-blue-200 mt-16'>
                 <div className='container lg:flex lg:items-center  w-full  '>
                     <div className='header'>
                         <h3 className='font-semibold'>login here</h3>

@@ -33,7 +33,7 @@ const ScheduleStep3 = () => {
     console.log('subscription_id', subscription_id)
 
 
-    const userData = JSON.parse(localStorage.getItem('userData'))
+    const userData = (localStorage.getItem('userData'))
     console.log('dataBase', userData._id)
 
     const paymentDetails = {
@@ -110,64 +110,120 @@ const ScheduleStep3 = () => {
                         {/* /> */}
                         <div className='flex gap-2'>
                             {
-                                data &&
-                                data.map((e) => {
-                                    return <PlanCard key={e.planId} plan={e} />
-                                })
+                                <PlanCard plan={data} />
                             }
                         </div>
                     </RadioGroup>
                 </FormControl>
 
-                <div className='flex mt-10'>
-                    <form class='max-w-sm mx-auto'>
-                        <label
-                            for='countries'
-                            class='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-                        >
-                            Select an gender
-                        </label>
-                        <select
-                            id='countries'
-                            class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-                        >
-                            <option selected>Choose a gender</option>
-                            <option value='male'>male</option>
-                            <option value='female'>female</option>
-                        </select>
-                    </form>
-                </div>
-                <div className='flex items-center justify-center'>
-                    {male && (
+                <div className=' flex items-center justify-center gap-10 mt-4'>
+                    <div className='flex items-center justify-center bg-yellow-50 gap-5 mt-4 px-5 py-5' >
+
                         <FormControl>
-                            <FormLabel id='demo-radio-buttons-group-label'>
-                                morning batch
-                            </FormLabel>
+                            <h1 className=' capitalize font-semibold text-xl'>
+                                Morning batch
+                            </h1>
                             <RadioGroup
                                 aria-labelledby='demo-radio-buttons-group-label'
                                 defaultValue=' 7:00 to 8:00'
                                 name='radio-buttons-group'
                             >
-                                <FormControlLabel
-                                    value=' 7:00 to 8:00'
-                                    control={<Radio />}
-                                    label='7:00 to 8:00'
-                                />
-                                <FormControlLabel
-                                    value='9:00 to 11:00'
-                                    control={<Radio />}
-                                    label='9:00 to 11:00'
-                                />
-                                <FormControlLabel
-                                    value='11:00 to 12:000'
-                                    control={<Radio />}
-                                    label='11:00 to  12:00'
-                                />
+                                <div className=' flex items-center gap-5'>
+                                    <FormControlLabel
+                                        value=' 7:00 to 8:00'
+                                        control={<Radio />}
+                                        label='7:00 to 8:00'
+                                    />
+                                    <p>
+                                        enroll = 10
+                                    </p>
+                                    <p>
+                                        blank = 70
+                                    </p>
+                                </div>  <div className=' flex items-center gap-5'>
+                                    <FormControlLabel
+                                        value=' 8:00 to 9:00'
+                                        control={<Radio />}
+                                        label='8:00 to 9:00'
+                                    />
+                                    <p>
+                                        enroll = 10
+                                    </p>
+                                    <p>
+                                        blank = 70
+                                    </p>
+                                </div>  <div className=' flex items-center gap-5'>
+                                    <FormControlLabel
+                                        value=' 9:00 to 10:00'
+                                        control={<Radio />}
+                                        label='9:00 to 10:00'
+                                    />
+                                    <p>
+                                        enroll = 10
+                                    </p>
+                                    <p>
+                                        blank = 70
+                                    </p>
+                                </div>
                             </RadioGroup>
                         </FormControl>
-                    )}
+
+                    </div>
+                    <div className='flex items-center justify-center bg-yellow-50 gap-5 mt-4 px-5 py-5' >
+
+                        <FormControl>
+                            <h1 className=' text-xl capitalize font-semibold'>
+                                evening batch
+                            </h1>
+                            <RadioGroup
+                                aria-labelledby='demo-radio-buttons-group-label'
+                                defaultValue=' 7:00 to 8:00'
+                                name='radio-buttons-group'
+                            >
+                                <div className=' flex items-center gap-5'>
+                                    <FormControlLabel
+                                        value=' 7:00 to 8:00'
+                                        control={<Radio />}
+                                        label='7:00 to 8:00'
+                                    />
+                                    <p>
+                                        enroll = 10
+                                    </p>
+                                    <p>
+                                        blank = 70
+                                    </p>
+                                </div>  <div className=' flex items-center gap-5'>
+                                    <FormControlLabel
+                                        value=' 8:00 to 9:00'
+                                        control={<Radio />}
+                                        label='8:00 to 9:00'
+                                    />
+                                    <p>
+                                        enroll = 10
+                                    </p>
+                                    <p>
+                                        blank = 70
+                                    </p>
+                                </div>  <div className=' flex items-center gap-5'>
+                                    <FormControlLabel
+                                        value=' 9:00 to 10:00'
+                                        control={<Radio />}
+                                        label='9:00 to 10:00'
+                                    />
+                                    <p>
+                                        enroll = 10
+                                    </p>
+                                    <p>
+                                        blank = 70
+                                    </p>
+                                </div>
+                            </RadioGroup>
+                        </FormControl>
+
+                    </div>
                 </div>
             </div>
+
             <Button
                 variant='contained'
                 color='secondary'
