@@ -10,6 +10,8 @@ function PlanCard({ plan }) {
         setSelectedCard(index);
     };
     console.log(plan)
+
+
     return (
         <>
             {
@@ -35,6 +37,7 @@ function PlanCard({ plan }) {
                         {/* <input
                 type='radio'
             /> */}
+                        {console.log(selectedCard)}
                     </a>
                 )
             }

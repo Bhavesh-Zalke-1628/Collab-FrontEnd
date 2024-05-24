@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -19,7 +18,12 @@ import Button from '@mui/material/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/slices/authSlices'
-// import firstLogo from '../assets/firstLogo.png'
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Draggable from 'react-draggable'
+import { Paper } from '@mui/material'
 
 const drawerWidth = 240
 const navItems = [
@@ -31,15 +35,32 @@ const navItems = [
     name: 'about',
     slug: '/about'
   },
+  // {
+  //   name: 'services',
+  //   slug: '/services'
+  // },
   {
-    name: 'services',
+    name: 'contact',
+    slug: '/contact'
+  },
+]
+const naviItemsForAdmin = [
+  {
+    name: 'Home',
+    slug: '/'
+  },
+  {
+    name: 'about',
+    slug: '/about'
+  },
+  {
+    name: 'Application',
     slug: '/services'
   },
   {
     name: 'contact',
     slug: '/contact'
   },
-
 ]
 
 function Navbar(props) {
@@ -47,8 +68,30 @@ function Navbar(props) {
     e.preventDefault()
     const res = await dispatch(logout())
     if (res?.payload?.success) navigate('/')
+    handleClose()
   }
 
+
+  const { data } = useSelector((state) => state?.auth)
+
+  console.log(data.role)
+  const [open, setOpen] = useState(false);
+  function PaperComponent(props) {
+    return (
+      <Draggable
+        handle="#draggable-dialog-title"
+        cancel={'[class*="MuiDialogContent-root"]'}
+      >
+        <Paper {...props} />
+      </Draggable>
+    );
+  }
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -64,10 +107,7 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      {/* <Typography variant='h6' sx={{ my: 2 }}>
-        <img src={firstLogo} className='w-[5rem]' alt='' /  >
-        जिल्हा क्रीडा संकुल समिति
-      </Typography> */}
+
       <Divider />
       <List>
         {navItems.map(item => (
@@ -140,46 +180,96 @@ function Navbar(props) {
         </nav>
 
         <AppBar component='nav' >
-          <Toolbar c>
-            {/* <img className='w-[4.5rem] m-1 p-1' src={} alt='logo' /> */}
+          <Toolbar >
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
               जिल्हा क्रीडा संकुल समिती, यवतमाळ
             </Typography>
 
-
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {navItems.map(item => (
-                <Button
-                  key={item}
-                  sx={{ color: '#fff' }}
-                  onClick={() => navigate(item.slug)}
-                >
-                  {item.name}
-                </Button>
-              ))}
+              {
+                data.role == 'Admin' ? (
+                  naviItemsForAdmin.map(item => (
+                    <Button
+                      key={item}
+                      sx={{ color: '#fff' }}
+                      onClick={() => navigate(item.slug)}
+                    >
+                      {item.name}
+                    </Button>
+                  ))
+                ) : (
+                  // console.log('hello')
+                  navItems.map(item => (
+                    <Button
+                      key={item}
+                      sx={{ color: '#fff' }}
+                      onClick={() => navigate(item.slug)}
+                    >
+                      {item.name}
+                    </Button>
+                  ))
+                )
+              }
             </Box>
 
-
             {!isLoggedIn && (
-              <Link to='/batches'>
+              <Link to='/login'>
                 <a className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'>
-                  get start
+                  LogIn
                 </a>
               </Link>
             )}
 
             {isLoggedIn && (
-
               <a
                 className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
-                onClick={handleLogout}
+                onClick={handleClickOpen}
               >
-                profile
+                Profile
               </a>
-
             )}
+            {
+              <React.Fragment>
+                <Dialog
+                  open={open}
+                  onClose={handleClose}
+                  PaperComponent={PaperComponent}
+                  aria-labelledby="draggable-dialog-title"
+                >
+                  <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+                    Profile
+                  </DialogTitle>
+                  <DialogContent>
+                    <DialogContentText
+                      fontSize={'5vh'}
+                    >
+                      {console.log(data)}
+                      {data?.username}
+                    </DialogContentText>
+                  </DialogContent>
+                  <div className=' min-w-96 px-2 py-4 flex justify-evenly items-center'>
+                    <Link
+                      to='/user/profile'
+                      onClick={handleClose}
+                    >
+                      <button
+                        className='bg-green-400 text-gray-700 px-4 rounded-lg py-2 text-lg font-semibold cursor-pointer hover:bg-green-500 transition-all ease-in-out duration-300'
+                      >
+                        View profile
+                      </button>
+                    </Link>
 
-
+                    <Button
+                      onClick={handleLogout}
+                      color='error'
+                      variant='contained'
+                    >
+                      Log out
+                    </Button>
+                  </div>
+                </Dialog>
+              </React.Fragment>
+            }
 
             <IconButton
               color='inherit'
@@ -192,10 +282,11 @@ function Navbar(props) {
             </IconButton>
           </Toolbar>
         </AppBar>
-
       </Box>
-    </div>
+    </div >
+
   )
+
 }
 
 Navbar.propTypes = {

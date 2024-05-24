@@ -70,12 +70,30 @@ function UserRegistration() {
         const options = {
             key: razorpayKey,
             subscription_id: subscription_id,
-            name: " यवतमाळ क्रीडा संकुलन समिती",
-            description: "Subscription",
-            theme: {
-                color: '#0000'
+            prefill: {
+                name: 'Gaurav Kumar',
+                email: 'gaurav.kumar@example.com',
+                contact: '9999999999',
             },
-
+            notes: {
+                address: 'Razorpay Corporate Office',
+            },
+            theme: {
+                color: '#3399cc',
+            },
+            method: {
+                netbanking: true,
+                card: false,
+                upi: true,
+                wallet: true,
+                emi: true,
+                paylater: true,
+            },
+            // Specific options for UPI payments
+            upi: {
+                flow: 'collect', // You can also use 'intent'
+                vpa: 'gauravkumar@exampleupi', // Optional
+            },
             handler: async function (response) {
                 paymentDetails.razorpay_payment_id = response.razorpay_payment_id;
                 paymentDetails.razorpay_signature = response.razorpay_signature;

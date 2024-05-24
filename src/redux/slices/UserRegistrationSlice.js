@@ -74,10 +74,12 @@ const userRegistrationSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(userRegistration.fulfilled, async (state, action) => {
-                console.log(action.payload.user)
+                console.log(action.payload)
                 state.registerUserData = action.payload.user
-                localStorage.setItem('userData', JSON.stringify(action.payload.user))
+                localStorage.setItem('userData', JSON.stringify(action.payload))
             })
+
+
             .addCase(getUserRegistration.fulfilled, (state, action) => {
                 console.log(action.payload.user)
                 state.registerUserData = action.payload.user

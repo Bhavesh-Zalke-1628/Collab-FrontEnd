@@ -12,7 +12,7 @@ const InfoStep2 = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const data = (localStorage.getItem('userData'))
+    const data = JSON.parse(localStorage.getItem('userData'))
     console.log(data)
     async function handleFileChange(e) {
         const file = e.target.files[0]
