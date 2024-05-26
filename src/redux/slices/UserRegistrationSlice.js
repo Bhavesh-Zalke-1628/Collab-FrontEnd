@@ -68,7 +68,8 @@ export const uploadFitness = createAsyncThunk('/fitness', async (data) => {
 })
 
 export const uploadBatch = createAsyncThunk('/batches/upload', async (data) => {
-    const response = await axiosInstance.post('/user/swim/batches', data);
+    console.log(data)
+    const response = await axiosInstance.post('/user/batch/upload', data);
     console.log(response)
 })
 

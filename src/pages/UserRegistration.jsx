@@ -197,7 +197,7 @@ function UserRegistration() {
                                 value={registerData.gender}
                                 name='gender'
                                 id='gender'
-                                className=' border px-5 py-2'
+                                className='border px-5 py-2'
                             >
                                 <option >-Select-</option>
                                 <option className=' capitalize font-semibold' value="male">male</option>
