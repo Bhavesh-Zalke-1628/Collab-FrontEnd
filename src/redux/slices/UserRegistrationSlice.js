@@ -67,6 +67,11 @@ export const uploadFitness = createAsyncThunk('/fitness', async (data) => {
     return (await response).data
 })
 
+export const uploadBatch = createAsyncThunk('/batches/upload', async (data) => {
+    const response = await axiosInstance.post('/user/swim/batches', data);
+    console.log(response)
+})
+
 const userRegistrationSlice = createSlice({
     name: "userRegistrationSlice",
     initialState,

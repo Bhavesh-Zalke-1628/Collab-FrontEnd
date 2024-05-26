@@ -103,27 +103,7 @@ function UserRegistration() {
                 console.log(res)
                 console.log('navigate res', res)
                 toast.success(res?.payload?.msg);
-                if (res?.payload?.success) {
-                    const formData = new FormData()
-                    formData.append('username', registerData.username)
-                    formData.append('email', registerData.email)
-                    formData.append('password', registerData.password)
-                    formData.append('contact', registerData.contact)
-                    formData.append('gender', registerData.gender)
 
-                    console.log(formData)
-                    console.log('fromData from Signup', formData)
-                    const response = await dispatch(createAccount(formData))
-                    console.log(response)
-                    localStorage.setItem('data', JSON.stringify(response))
-                    setregisteData({
-                        username: '',
-                        email: '',
-                        password: '',
-                        contact: ''
-                    })
-                    res?.payload?.success ? navigate("/user-registration/success") : navigate("/checkout/fail");
-                }
             }
         }
         const paymentObject = new window.Razorpay(options);
@@ -167,9 +147,25 @@ function UserRegistration() {
             )
             return
         }
+        const formData = new FormData()
+        formData.append('username', registerData.username)
+        formData.append('email', registerData.email)
+        formData.append('password', registerData.password)
+        formData.append('contact', registerData.contact)
+        formData.append('gender', registerData.gender)
+
+        console.log(formData)
+        console.log('fromData from Signup', formData)
+        const response = await dispatch(createAccount(formData))
+        console.log(response)
+        localStorage.setItem('data', JSON.stringify(response))
+        setregisteData({
+            username: '',
+            email: '',
+            password: '',
+            contact: ''
+        })
         localStorage.setItem('userData', JSON.stringify(registerData))
-        handleClickOpen()
-        await load()
     }
 
     return (

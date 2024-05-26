@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
@@ -18,12 +19,10 @@ import Button from '@mui/material/Button'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../redux/slices/authSlices'
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Draggable from 'react-draggable'
-import { Paper } from '@mui/material'
+import sports from '../assets/sports.png'
+import smjt from '../assets/smjt.png'
+import { TiThMenu } from 'react-icons/ti'
+import sevenyfiveears from '../assets/sevenyfiveears.jpg'
 
 const drawerWidth = 240
 const navItems = [
@@ -35,32 +34,15 @@ const navItems = [
     name: 'about',
     slug: '/about'
   },
-  // {
-  //   name: 'services',
-  //   slug: '/services'
-  // },
   {
-    name: 'contact',
-    slug: '/contact'
-  },
-]
-const naviItemsForAdmin = [
-  {
-    name: 'Home',
-    slug: '/'
-  },
-  {
-    name: 'about',
-    slug: '/about'
-  },
-  {
-    name: 'Application',
+    name: 'services',
     slug: '/services'
   },
   {
     name: 'contact',
     slug: '/contact'
   },
+
 ]
 
 function Navbar(props) {
@@ -68,87 +50,49 @@ function Navbar(props) {
     e.preventDefault()
     const res = await dispatch(logout())
     if (res?.payload?.success) navigate('/')
-    handleClose()
   }
 
-
-  const { data } = useSelector((state) => state?.auth)
-
-  console.log(data.role)
-  const [open, setOpen] = useState(false);
-  function PaperComponent(props) {
-    return (
-      <Draggable
-        handle="#draggable-dialog-title"
-        cancel={'[class*="MuiDialogContent-root"]'}
-      >
-        <Paper {...props} />
-      </Draggable>
-    );
-  }
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [loading, setLoading] = useState(true)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { isLoggedIn } = useSelector(state => state?.auth)
+  const { data } = useSelector(state => state?.auth)
 
   const { window } = props
   const [mobileOpen, setMobileOpen] = React.useState(false)
-
 
   const handleDrawerToggle = () => {
     setMobileOpen(prevState => !prevState)
   }
 
   const drawer = (
-    <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+    <div
+      className='  bg-blue-900 text-white
+    '
+    >
+      <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+        <Typography variant='h6' sx={{ my: 2 }}>
+          <img src={sports} className='w-[5rem]' alt='' />
+          {/* जिल्हा क्रीडा संकुल समिति */}
+        </Typography>
+        <Divider />
+        <List>
+          {navItems.map(item => (
+            <ListItem key={item} disablePadding>
+              <ListItemButton
+                sx={{ textAlign: 'center' }}
+                onClick={() => navigate(item.slug)}
+              >
+                <ListItemText primary={item.name} />
+              </ListItemButton>
+            </ListItem>
+          ))}
 
-      <Divider />
-      <List>
-        {navItems.map(item => (
-          <ListItem key={item} disablePadding>
-            <ListItemButton
-              sx={{ textAlign: 'center' }}
-              onClick={() => navigate(item.slug)}
-            >
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      {
-        !isLoggedIn ? (
+        </List>
 
-          <Link Link
-            to='/login'
-          >
-            <Button
-              variant='contained'
-              color='primary'
-            >
-              Log in
-            </Button>
-          </Link>
-        ) : (
-          <Link Link
-            to='/user/profile'
-          >
-            <Button
-              variant='contained'
-              color='primary'
-            >
-              profile
-            </Button>
-          </Link>
-        )
-      }
-
-    </Box >
+      </Box>
+    </div>
   )
 
   const container =
@@ -179,114 +123,90 @@ function Navbar(props) {
           </Drawer>
         </nav>
 
-        <AppBar component='nav' >
-          <Toolbar >
+        <AppBar component='nav'>
+          <Toolbar>
+            <img className='w-[4.5rem] m-1 p-1' src={smjt} alt='logo' />
+            {/* 
+            <img
+              className='w-[4.5rem] m-1 p-1'
+              src={sevenyfiveears}
+              alt='logo'
+            />
+            <img className='w-[4.5rem] m-1 p-1' src={sports} alt='logo' /> */}
+
             <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
               जिल्हा क्रीडा संकुल समिती, यवतमाळ
             </Typography>
 
             <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-              {
-                data.role == 'Admin' ? (
-                  naviItemsForAdmin.map(item => (
-                    <Button
-                      key={item}
-                      sx={{ color: '#fff' }}
-                      onClick={() => navigate(item.slug)}
-                    >
-                      {item.name}
-                    </Button>
-                  ))
-                ) : (
-                  // console.log('hello')
-                  navItems.map(item => (
-                    <Button
-                      key={item}
-                      sx={{ color: '#fff' }}
-                      onClick={() => navigate(item.slug)}
-                    >
-                      {item.name}
-                    </Button>
-                  ))
-                )
-              }
+              {navItems.map(item => (
+                <Button
+                  key={item}
+                  sx={{ color: '#fff' }}
+                  onClick={() => navigate(item.slug)}
+                >
+                  {item.name}
+                </Button>
+              ))}
             </Box>
 
-            {!isLoggedIn && (
-              <Link to='/login'>
+            {/* {!isLoggedIn && (
+              <Link to='/batches'>
                 <a className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'>
-                  LogIn
+                  get start
+                </a>
+              </Link>
+            )} */}
+
+            {
+              !isLoggedIn &&
+              <div className=' mr-1'>
+                <Button
+                  variant='contained'
+                  color='success'
+                  onClick={() => navigate('/login')}
+                >
+                  Login
+                </Button>
+              </div>
+            }
+
+            {isLoggedIn && (
+              <Link to='/register'>
+                <a
+                  className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
+                  onClick={handleLogout}
+                >
+                  logout
                 </a>
               </Link>
             )}
-
-            {isLoggedIn && (
-              <a
-                className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
-                onClick={handleClickOpen}
-              >
-                Profile
-              </a>
-            )}
-            {
-              <React.Fragment>
-                <Dialog
-                  open={open}
-                  onClose={handleClose}
-                  PaperComponent={PaperComponent}
-                  aria-labelledby="draggable-dialog-title"
+            {!isLoggedIn && (
+              <Link to='/login'>
+                <a
+                  className='uppercase text-black i nline-block  text-sm bg-white py-2 px-4 rounded font-semibold hover:bg-indigo-100'
+                  onClick={handleLogout}
                 >
-                  <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-                    Profile
-                  </DialogTitle>
-                  <DialogContent>
-                    <DialogContentText
-                      fontSize={'5vh'}
-                    >
-                      {console.log(data)}
-                      {data?.username}
-                    </DialogContentText>
-                  </DialogContent>
-                  <div className=' min-w-96 px-2 py-4 flex justify-evenly items-center'>
-                    <Link
-                      to='/user/profile'
-                      onClick={handleClose}
-                    >
-                      <button
-                        className='bg-green-400 text-gray-700 px-4 rounded-lg py-2 text-lg font-semibold cursor-pointer hover:bg-green-500 transition-all ease-in-out duration-300'
-                      >
-                        View profile
-                      </button>
-                    </Link>
-
-                    <Button
-                      onClick={handleLogout}
-                      color='error'
-                      variant='contained'
-                    >
-                      Log out
-                    </Button>
-                  </div>
-                </Dialog>
-              </React.Fragment>
-            }
+                  सभासद व्हा
+                </a>
+              </Link>
+            )}
 
             <IconButton
               color='inherit'
               aria-label='open drawer'
               edge='end'
               onClick={handleDrawerToggle}
-              sx={{ mr: 4, display: { sm: 'none' } }}
+              sx={{ display: { sm: 'none' } }}
             >
-              <MenuIcon />
+              {/* <MenuIcon  /> */}
+              <TiThMenu className=' text-white text-5xl' width={200} />
             </IconButton>
           </Toolbar>
         </AppBar>
       </Box>
-    </div >
-
+    </div>
   )
-
 }
 
 Navbar.propTypes = {
