@@ -68,10 +68,22 @@ export const uploadFitness = createAsyncThunk('/fitness', async (data) => {
 })
 
 export const uploadBatch = createAsyncThunk('/batches/upload', async (data) => {
-    console.log(data)
-    const response = await axiosInstance.post('/user/batch/upload', data);
-    console.log(response)
+    const config = {
+        headers: {
+            'content-Type': 'application/json'
+        }
+    }
+    const userData = JSON.parse(localStorage.getItem('userData'))
+    const response = await axiosInstance.post(`/user/batch/upload${userData._id}`, data, config);
+    toast.promise(response, {
+        loading: 'Wait!! selection on process',
+        success: "Suucessfully selceted",
+        error: "failed to select the batch"
+    })
+    console.log((await response).data)
+    return await response.data
 })
+
 
 const userRegistrationSlice = createSlice({
     name: "userRegistrationSlice",
@@ -84,7 +96,6 @@ const userRegistrationSlice = createSlice({
                 state.registerUserData = action.payload.user
                 localStorage.setItem('userData', JSON.stringify(action.payload))
             })
-
 
             .addCase(getUserRegistration.fulfilled, (state, action) => {
                 console.log(action.payload.user)

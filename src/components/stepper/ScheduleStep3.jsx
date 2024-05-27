@@ -23,7 +23,7 @@ import {
     verifyUserPayment
 } from '../../redux/slices/paymentSlice'
 import { useNavigate } from 'react-router-dom'
-import { Flag } from '@mui/icons-material'
+import { CloseFullscreen, Flag } from '@mui/icons-material'
 import { uploadBatch } from '../../redux/slices/UserRegistrationSlice'
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -152,11 +152,12 @@ const ScheduleStep3 = () => {
         e.preventDefault()
         const formData = new FormData()
 
-        formData.append('batch', batchData.batch)
+        formData.append('batch', batchData.batch.planId)
         formData.append('batchTime', batchData.batchTime)
         formData.append('batchVel', batchData.batchVel)
 
         const response = await dispatch(uploadBatch(formData))
+        console.log(response)
     }
     return (
         <div>
